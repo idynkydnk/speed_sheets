@@ -21,16 +21,17 @@ DataMapper.finalize.auto_upgrade!
 get '/' do
   @games = Game.all :order => :id.desc
   @title = 'All Games'
-  @todays_stats = todays_stats
-  @years_stats = years_stats
-  erb :home
-end
-
-get '/stats' do
-  @games = Game.all :order => :id.desc
+  @min_games = 10
   @todays_stats = todays_stats
   @years_stats = years_stats
   erb :stats
+end
+
+get '/add_game' do
+  @games = Game.all :order => :id.desc
+  @todays_stats = todays_stats
+  @years_stats = years_stats
+  erb :add_game
 end
 
 post '/' do
@@ -172,9 +173,10 @@ def years_stats
       end
     end
     win_percentage = (wins.to_f / (wins + losses).to_f * 100.0).round(1)
+    total_games = wins + losses
     x = { :player => player, :wins => wins, :losses => losses, 
-          :win_percentage => win_percentage }
-    name_and_stats.push(x)
+          :win_percentage => win_percentage, :total_games => total_games }
+    name_and_stats.push(x) unless x[:total_games] < @min_games
   end
   name_and_stats.sort! { |a,b| b[:win_percentage] <=> a[:win_percentage] }
 end
