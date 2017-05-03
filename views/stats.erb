@@ -1,3 +1,13 @@
+<% if @todays_stats.length > 0 %>
+	Today's Stats
+	<% end %>
+<% @todays_stats.each do |stat| %>
+  <article>
+    <%= stat[:player] %> - <%= stat[:wins] %>-<%= stat[:losses] %> - <%= stat[:win_percentage] %>%
+  </article>
+<% end %>
+<br>
+2017 Stats
 <% @years_stats.each do |stat| %>
   <article>
     <%= stat[:player] %> - <%= stat[:wins] %>-<%= stat[:losses] %> - <%= stat[:win_percentage] %>%  -  <%= stat[:total_games] %>

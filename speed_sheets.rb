@@ -33,6 +33,11 @@ get '/add_game' do
   erb :add_game
 end
 
+get '/games' do
+  @games = Game.all :order => :id.desc
+  erb :games
+end
+
 post '/add_game' do
   n = Game.new
   n.location = params[:location]
@@ -77,7 +82,7 @@ end
 delete '/:id' do
   n = Game.get params[:id]
   n.destroy
-  redirect '/'
+  redirect '/games'
 end
 
 def reload_database
@@ -114,7 +119,7 @@ def todays_stats
         losses += 1
       end
     end
-    win_percentage = (wins.to_f / (wins + losses).to_f * 100.0).round(1)
+    win_percentage = (wins.to_f / (wins + losses).to_f * 100.0).round(2)
     x = { :player => player, :wins => wins, :losses => losses, 
           :win_percentage => win_percentage }
     name_and_stats.push(x)
@@ -171,7 +176,7 @@ def years_stats
         losses += 1
       end
     end
-    win_percentage = (wins.to_f / (wins + losses).to_f * 100.0).round(1)
+    win_percentage = (wins.to_f / (wins + losses).to_f * 100.0).round(2)
     total_games = wins + losses
     x = { :player => player, :wins => wins, :losses => losses, 
           :win_percentage => win_percentage, :total_games => total_games }
