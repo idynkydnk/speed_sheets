@@ -1,0 +1,67 @@
+<section id="add">
+
+  <div class="myInputs">
+
+  <form name="my_form" action="/" method="post">
+    <input id="auto-location" autofocus name="location" placeholder="Your location&hellip;" ></input>
+    <br><br><br>
+    <input id="auto-winner1" name="winner1" placeholder="Winner first player&hellip;"></input>
+    <br><br><br>
+    <input id="auto-winner2" name="winner2" placeholder="Winner second player&hellip;"></input>
+    <br><br><br>
+    <input id="auto-loser1" name="loser1" placeholder="Loser first player&hellip;"></input>
+    <br><br><br>
+    <input id="auto-loser2" name="loser2" placeholder="Loser second player&hellip;"></input>
+    <br><br><br>
+    <input type="submit" value="Submit!">
+  </form>
+
+  </div>
+
+
+<script src="/js/auto-complete.js"></script> 
+<script> 
+  $('#auto-location').on('focus', function() {
+   document.body.scrollTop += this.getBoundingClientRect().top - 1;
+  });
+  $('#auto-winner1').on('focus', function() {
+   document.body.scrollTop += this.getBoundingClientRect().top - 1;
+  });
+  $('#auto-winner2').on('focus', function() {
+   document.body.scrollTop += this.getBoundingClientRect().top - 1;
+  });
+  $('#auto-loser1').on('focus', function() {
+   document.body.scrollTop += this.getBoundingClientRect().top - 1;
+  });
+  $('#auto-loser2').on('focus', function() {
+   document.body.scrollTop += this.getBoundingClientRect().top - 1;
+  });
+</script>
+
+
+</section>
+
+<% @years_stats.each do |stat| %>
+  <article>
+    <%= stat[:player] %> - <%= stat[:wins] %>-<%= stat[:losses] %> - <%= stat[:win_percentage] %>%
+  </article>
+<% end %>
+
+<% @todays_stats.each do |stat| %>
+  <article>
+    <p>
+    <%= stat[:player] %> - <%= stat[:wins] %>-<%= stat[:losses] %> - <%= stat[:win_percentage] %>%
+    </p>
+  </article>
+<% end %>
+
+<% @games.each do |game| %>
+  <article>
+    <p>
+      <%= game.date.strftime("%m/%d/%y") %> - <%= game.winner1 %> and <%= game.winner2 %> beat <%= game.loser1 %> and 
+      <%= game.loser2 %>
+      <span><a href="/<%= game.id %>">[edit]</a></span>
+    </p>
+  </article>
+<% end %>
+

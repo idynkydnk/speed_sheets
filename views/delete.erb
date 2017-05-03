@@ -1,0 +1,10 @@
+<% if @game %>
+  <p>Are you sure you want to delete the following note: <em>"<%= @game.id %>"</em>?</p>
+  <form action="/<%= @game.id %>" method="post">
+    <input type="hidden" name="_method" value="delete">
+    <input type="submit" value="Yes, Delete It!">
+    <a href="/<%= @game.id %>">Cancel</a>
+  </form>
+<% else %>
+  <p>Note not found.</p>
+<% end %>

@@ -1,0 +1,5 @@
+<% @years_stats.each do |stat| %>
+  <article>
+    <%= stat[:player] %> - <%= stat[:wins] %>-<%= stat[:losses] %> - <%= stat[:win_percentage] %>%
+  </article>
+<% end %>
