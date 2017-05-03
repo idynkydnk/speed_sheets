@@ -30,11 +30,10 @@ end
 get '/add_game' do
   @games = Game.all :order => :id.desc
   @todays_stats = todays_stats
-  @years_stats = years_stats
   erb :add_game
 end
 
-post '/' do
+post '/add_game' do
   n = Game.new
   n.location = params[:location]
   n.winner1 = params[:winner1]
@@ -46,7 +45,7 @@ post '/' do
   if n.location != "" && n.winner1 != "" && n.winner2 != "" && n.loser1 != "" && n.loser2 != "" 
     n.save
   end
-  redirect '/'
+  redirect '/add_game'
 end
 
 get '/:id' do
@@ -115,7 +114,7 @@ def todays_stats
         losses += 1
       end
     end
-    win_percentage = wins.to_f / (wins + losses).to_f * 100.0
+    win_percentage = (wins.to_f / (wins + losses).to_f * 100.0).round(1)
     x = { :player => player, :wins => wins, :losses => losses, 
           :win_percentage => win_percentage }
     name_and_stats.push(x)
