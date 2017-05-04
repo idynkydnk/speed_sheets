@@ -20,11 +20,17 @@ DataMapper.finalize.auto_upgrade!
 
 get '/' do
   @games = Game.all :order => :id.desc
-  @title = 'All Games'
   @min_games = 10
   @todays_stats = todays_stats
   @years_stats = years_stats
   erb :stats
+end
+
+get '/team_stats' do
+  @games = Game.all :order => :id.desc
+  @min_games = 10
+  @team_stats = teams
+  erb :team_stats
 end
 
 get '/add_game' do
@@ -36,6 +42,11 @@ end
 get '/games' do
   @games = Game.all :order => :id.desc
   erb :games
+end
+
+get '/edit_games' do
+  @games = Game.all :order => :id.desc
+  erb :edit_games
 end
 
 post '/add_game' do
@@ -183,4 +194,17 @@ def years_stats
     name_and_stats.push(x) unless x[:total_games] < @min_games
   end
   name_and_stats.sort! { |a,b| b[:win_percentage] <=> a[:win_percentage] }
+end
+
+def teams
+  all_teams = []
+  @games.each_with_index do |game, x|
+    team = { :player1 => game.winner1, :player2 => game.winner2 }
+    if all_teams.include?({:team => team }) 
+      puts all_teams[x-3]
+    else
+      all_teams << { :team => team, :wins => 1, :losses => 0 }
+    end
+  end
+  all_teams.sort! { |a,b| a[:team][:player1] <=> b[:team][:player1] }
 end
