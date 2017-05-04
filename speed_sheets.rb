@@ -199,12 +199,11 @@ end
 def teams
   all_teams = []
   @games.each_with_index do |game, x|
-    team = { :player1 => game.winner1, :player2 => game.winner2 }
-    if all_teams.include?({:team => team }) 
-      puts all_teams[x-3]
+    team = game.winner1 + " and " + game.winner2 
+    if all_teams.include?(team) 
     else
-      all_teams << { :team => team, :wins => 1, :losses => 0 }
+      all_teams << team
     end
   end
-  all_teams.sort! { |a,b| a[:team][:player1] <=> b[:team][:player1] }
+  all_teams.sort! { |a,b| a <=> b }
 end
