@@ -1,7 +1,7 @@
 2017 Team Stats
-
-<% @team_stats.each do |team| %>
+<br></br>
+<% @team_stats.each_with_index do |stat, x| %>
   <article>
-    <%= team %> 
+    <%= (x+1).to_s %> <%= stat[:team] %> - <%= stat[:wins] %>-<%= stat[:losses] %> - <%= stat[:win_percentage] %> - <%= stat[:total_games] %>
   </article>
 <% end %>

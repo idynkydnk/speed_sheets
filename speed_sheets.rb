@@ -29,7 +29,7 @@ end
 get '/team_stats' do
   @games = Game.all :order => :id.desc
   @min_games = 10
-  @team_stats = teams
+  @team_stats = team_stats
   erb :team_stats
 end
 
@@ -132,9 +132,9 @@ def todays_stats
         losses += 1
       end
     end
-    win_percentage = (wins.to_f / (wins + losses).to_f * 100.0).round(2)
+    win_percent = "%.2f" % (wins.to_f / (wins + losses).to_f * 100.0)
     x = { :player => player, :wins => wins, :losses => losses, 
-          :win_percentage => win_percentage }
+          :win_percentage => win_percent }
     name_and_stats.push(x)
   end
   name_and_stats.sort! { |a,b| b[:wins] <=> a[:wins] }
@@ -189,10 +189,10 @@ def years_stats
         losses += 1
       end
     end
-    win_percentage = (wins.to_f / (wins + losses).to_f * 100.0).round(2)
+    win_percent = "%.2f" % (wins.to_f / (wins + losses).to_f * 100.0)
     total_games = wins + losses
     x = { :player => player, :wins => wins, :losses => losses, 
-          :win_percentage => win_percentage, :total_games => total_games }
+          :win_percentage => win_percent, :total_games => total_games }
     name_and_stats.push(x) unless x[:total_games] < @min_games
   end
   name_and_stats.sort! { |a,b| b[:win_percentage] <=> a[:win_percentage] }
@@ -208,4 +208,25 @@ def teams
     end
   end
   all_teams.sort! { |a,b| a <=> b }
+end
+
+def team_stats
+  stats = []
+  all_teams = teams
+  all_teams.each do |team|
+    wins, losses = 0, 0
+    @games.each do |game|
+      if team == game.winner1 + " and " + game.winner2
+        wins += 1
+      elsif team == game.loser1 + " and " + game.loser2
+        losses += 1
+      end
+    end
+    win_percent = "%.2f" % (wins.to_f / (wins + losses).to_f * 100.0)
+    total_games = wins + losses
+    x = { :team => team, :wins => wins, :losses => losses, 
+          :win_percentage => win_percent, :total_games => total_games }
+    stats.push(x) unless x[:total_games] < @min_games
+  end
+  stats.sort! { |a,b| b[:win_percentage] <=> a[:win_percentage] }
 end
