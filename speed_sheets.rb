@@ -2,7 +2,13 @@ require 'rubygems'
 require 'sinatra'
 require 'data_mapper'
 
-DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/recall.db") 
+configure :development do
+  DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/recall.db") 
+end
+
+configure :production do
+    DataMapper.setup(:default, ENV['HEROKU_POSTGRESQL_RED_URL'])
+end
 
 class Game
   include DataMapper::Resource
