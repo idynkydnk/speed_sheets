@@ -1,4 +1,5 @@
 source "http://rubygems.org"
+ruby "2.2.4"
 gem "sinatra"
 gem "data_mapper"
 #gem "dm-sqlite-adapter"
