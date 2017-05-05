@@ -2,8 +2,8 @@ require 'rubygems'
 require 'sinatra'
 require 'data_mapper'
 
-DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/recall.db")
- 
+DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/recall.db") 
+
 class Game
   include DataMapper::Resource
   property :id, Serial
