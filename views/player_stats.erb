@@ -2,6 +2,8 @@
   <br></br>
 <% @player_stats.each_with_index do |stat, x| %>
   <article>
-    <%= (x+1).to_s %> <%= stat[:team] %> - <%= stat[:wins] %>-<%= stat[:losses] %> - <%= stat[:win_percentage] %> - <%= stat[:total_games] %>
+    <%= (x+1).to_s %> <%= stat[:team] %> - <%= stat[:wins] %>-<%= 
+      stat[:losses] %> - <%= stat[:win_percentage] %> - <%= 
+       stat[:total_games] %>
   </article>
 <% end %>

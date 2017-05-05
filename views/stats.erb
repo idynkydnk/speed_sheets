@@ -14,6 +14,6 @@
 <br></br>
 <% @years_stats.each_with_index do |stat, x| %>
   <article>
-    <%= (x + 1).to_s %> <%= stat[:player] %> - <%= stat[:wins] %>-<%= stat[:losses] %> - <%= stat[:win_percentage] %>%  -  <%= stat[:total_games] %>
+    <%= (x + 1).to_s %> <a href="/players/<%= stat[:player] %>" > <%= stat[:player] %></a> - <%= stat[:wins] %>-<%= stat[:losses] %> - <%= stat[:win_percentage] %>%  -  <%= stat[:total_games] %>
   </article>
 <% end %>

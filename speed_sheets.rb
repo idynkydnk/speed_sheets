@@ -264,5 +264,16 @@ def player_stats
       stats << stat 
     end
   end
-  stats.sort! { |a,b| b[:total_games] <=> a[:total_games] }
+  x = format_teamates(@player, stats)
+  x.sort! { |a,b| b[:total_games] <=> a[:total_games] }
+end
+
+def format_teamates(player, stats)
+  formatted_team = []
+  stats.each do |stat|
+    players = stat[:team].split(" and ")
+    player == players[0] ? partner = players[1] : partner = players[0]
+    stat[:team] = "With " + partner
+    formatted_team << stat
+  end
 end
