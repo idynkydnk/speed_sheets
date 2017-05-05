@@ -33,6 +33,14 @@ get '/players/:player' do |player|
   erb :player_stats
 end
 
+get '/top_teams' do
+  @min_games = 10
+  @games = Game.all
+  @all_stats = team_stats
+  @top_teams = top_teams
+  erb :top_teams
+end
+
 get '/team_stats' do
   @games = Game.all :order => :id.desc
   @min_games = 10
@@ -233,7 +241,17 @@ def team_stats
     total_games = wins + losses
     x = { :team => team, :wins => wins, :losses => losses, 
           :win_percentage => win_percent, :total_games => total_games }
-    stats.push(x) unless x[:total_games] < @min_games
+    stats.push(x)
+  end
+  stats.sort! { |a,b| a[:team] <=> b[:team] }
+end
+
+def top_teams
+  stats = []
+  @all_stats.each do |stat|
+    if stat[:total_games] > @min_games
+      stats << stat
+    end
   end
   stats.sort! { |a,b| b[:win_percentage] <=> a[:win_percentage] }
 end
@@ -242,5 +260,6 @@ def player_stats
   @games.each do |game|
     if game.winner1 == @player || game.winner2 == @player
       wins 
+    end
   end
 end
