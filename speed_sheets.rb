@@ -28,6 +28,7 @@ end
 
 get '/players/:player' do |player|
   @games = Game.all
+  @team_stats = team_stats
   @player = player
   @player_stats = player_stats
   erb :player_stats
@@ -257,9 +258,11 @@ def top_teams
 end
 
 def player_stats
-  @games.each do |game|
-    if game.winner1 == @player || game.winner2 == @player
-      wins 
+  stats = []
+  @team_stats.each do |stat|
+    if stat[:team].include?(@player)
+      stats << stat 
     end
   end
+  stats.sort! { |a,b| b[:total_games] <=> a[:total_games] }
 end
