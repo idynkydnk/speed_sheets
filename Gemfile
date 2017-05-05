@@ -5,7 +5,7 @@ gem "data_mapper"
 gem 'rack'
 
 group :production do
-    gem "pg"
+    gem 'pg', '~> 0.18.4'
     gem "dm-postgres-adapter"
 end
 
