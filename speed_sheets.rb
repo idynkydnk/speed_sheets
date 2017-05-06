@@ -34,8 +34,11 @@ get '/' do
 end
 
 get '/reload_database' do
-  delete_database
   reload_database
+end
+
+get '/delete_database' do
+  delete_database
 end
 
 def reload_database
