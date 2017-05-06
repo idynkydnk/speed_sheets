@@ -34,6 +34,7 @@ get '/' do
 end
 
 get '/reload_database' do
+  delete_database
   reload_database
 end
 
@@ -46,11 +47,11 @@ def reload_database
   sheet = session.spreadsheet_by_key("1lI5GMwYa1ruXugvAERMJVJO4pX5RY69DCJxR4b0zDuI").worksheets[0]
   (1..sheet.num_rows).each do |row|
     x = Game.new
-    #date = sheet[row, 1].to_s
+    #date = sheet[row, 1]
     #new_date = Time.new(date[6..9], date[0..1], date[3..4])
     #x.date = new_date
-
-    x.date = sheet[row, 1]
+    date = sheet[row, 1]
+    x.date = Time.new(date[6..9], date[0..1], date[3..4])
     x.location = sheet[row, 2] 
     x.winner1 = sheet[row, 3]
     x.winner2 = sheet[row, 4]
