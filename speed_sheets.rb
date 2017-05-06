@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'sinatra'
 require 'data_mapper'
+require 'google_drive'
 
 configure :development do
   DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/recall.db") 
@@ -31,6 +32,27 @@ get '/' do
   @todays_stats = todays_stats
   @years_stats = years_stats
   erb :stats
+end
+
+get '/reload_database' do
+  reload_database
+end
+
+def reload_database
+  session = GoogleDrive::Session.from_config("config.json")
+  sheet = session.spreadsheet_by_key("1lI5GMwYa1ruXugvAERMJVJO4pX5RY69DCJxR4b0zDuI").worksheets[0]
+  (1..sheet.num_rows).each do |row|
+    x = Game.new
+    date = sheet[row, 1].to_s
+    new_date = Time.new(date[6..9], date[0..1], date[3..4])
+    x.date = new_date
+    x.location = sheet[row, 2] 
+    x.winner1 = sheet[row, 3]
+    x.winner2 = sheet[row, 4]
+    x.loser1 = sheet[row, 5]
+    x.loser2 = sheet[row, 6]
+    x.save
+  end 
 end
 
 get '/players/:player' do |player|

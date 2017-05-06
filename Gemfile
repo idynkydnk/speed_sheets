@@ -4,6 +4,7 @@ gem "sinatra"
 gem "data_mapper"
 #gem "dm-sqlite-adapter"
 gem 'rack'
+gem "google_drive"
 
 group :production do
     gem 'pg', '~> 0.18.4'
