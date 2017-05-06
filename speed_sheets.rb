@@ -34,8 +34,7 @@ get '/' do
 end
 
 get '/reload_database' do
-  @games = Game.all
-    reload_database
+  reload_database
 end
 
 get '/delete_database' do
@@ -43,15 +42,15 @@ get '/delete_database' do
 end
 
 def reload_database
-
   session = GoogleDrive::Session.from_config("config.json")
   sheet = session.spreadsheet_by_key("1lI5GMwYa1ruXugvAERMJVJO4pX5RY69DCJxR4b0zDuI").worksheets[0]
-    if @games.length < 3
   (1..sheet.num_rows).each do |row|
     x = Game.new
-    date = sheet[row, 1].to_s
-    new_date = Time.new(date[6..9], date[0..1], date[3..4])
-    x.date = new_date
+    #date = sheet[row, 1].to_s
+    #new_date = Time.new(date[6..9], date[0..1], date[3..4])
+    #x.date = new_date
+
+    x.date = sheet[row, 1]
     x.location = sheet[row, 2] 
     x.winner1 = sheet[row, 3]
     x.winner2 = sheet[row, 4]
@@ -59,7 +58,6 @@ def reload_database
     x.loser2 = sheet[row, 6]
     x.save
   end 
-end
 end
 
 get '/players/:player' do |player|
