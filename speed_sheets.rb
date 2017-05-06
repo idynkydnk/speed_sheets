@@ -45,13 +45,15 @@ end
 def reload_database
   session = GoogleDrive::Session.from_config("config.json")
   sheet = session.spreadsheet_by_key("1lI5GMwYa1ruXugvAERMJVJO4pX5RY69DCJxR4b0zDuI").worksheets[0]
-  (1..sheet.num_rows).each do |row|
+  #(1..sheet.num_rows).each do |row|
+  (1..360).each do |row|
     x = Game.new
     #date = sheet[row, 1]
     #new_date = Time.new(date[6..9], date[0..1], date[3..4])
     #x.date = new_date
     date = sheet[row, 1]
     x.date = Time.new(date[6..9], date[0..1], date[3..4])
+    puts x.date.month
     x.location = sheet[row, 2] 
     x.winner1 = sheet[row, 3]
     x.winner2 = sheet[row, 4]
