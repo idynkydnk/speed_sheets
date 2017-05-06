@@ -4,7 +4,7 @@ require 'data_mapper'
 require 'google_drive'
 
 configure :development do
-  DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/recall.db") 
+ DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/recall.db") 
 end
 
 configure :production do
@@ -19,7 +19,7 @@ class Game
   property :winner2, Text, :required => true
   property :loser1, Text, :required => true
   property :loser2, Text, :required => true
-  property :date, DateTime
+  property :date, Text
   property :updated_at, DateTime
 end
  
@@ -45,15 +45,13 @@ end
 def reload_database
   session = GoogleDrive::Session.from_config("config.json")
   sheet = session.spreadsheet_by_key("1lI5GMwYa1ruXugvAERMJVJO4pX5RY69DCJxR4b0zDuI").worksheets[0]
-  #(1..sheet.num_rows).each do |row|
-  (1..360).each do |row|
+  (1..sheet.num_rows).each do |row|
+
     x = Game.new
     #date = sheet[row, 1]
     #new_date = Time.new(date[6..9], date[0..1], date[3..4])
     #x.date = new_date
-    date = sheet[row, 1]
-    x.date = Time.new(date[6..9], date[0..1], date[3..4])
-    puts x.date.month
+    x.date = sheet[row, 1]
     x.location = sheet[row, 2] 
     x.winner1 = sheet[row, 3]
     x.winner2 = sheet[row, 4]
@@ -109,7 +107,7 @@ post '/add_game' do
   n.winner2 = params[:winner2]
   n.loser1 = params[:loser1]
   n.loser2 = params[:loser2]
-  n.date = Time.now
+  n.date = my_time_now 
   n.updated_at = Time.now
   n.winner1, n.winner2 = n.winner2, n.winner1 if n.winner2 < n.winner1 
   n.loser1, n.loser2 = n.loser2, n.loser1 if n.loser2 < n.loser1 
@@ -117,6 +115,15 @@ post '/add_game' do
     n.save
   end
   redirect '/add_game'
+end
+
+def my_time_now
+  month = Time.now.month.to_s
+  day = Time.now.day.to_s
+  year = Time.now.year.to_s
+  month = "0" + month if month.length < 2
+  day = "0" + day if day.length < 2
+  return month + "/" + day + "/" + year
 end
 
 get '/:id' do
@@ -179,7 +186,9 @@ end
 def todays_games
   games = []
   @games.each do |game|
-    if game.date.strftime("%m/%d/%y") == Time.now.strftime("%m/%d/%y")
+    if game.date[0..1].to_i == Time.now.month &&
+        game.date[3..4].to_i == Time.now.day &&
+        game.date[6..9].to_i == Time.now.year
       games << game 
     end
   end

@@ -2,7 +2,7 @@ Games
 <br></br>
 <% @games.each do |game| %>
   <article>
-      <%= game.date.strftime("%m/%d/%y") %> - <%= game.winner1 %> and <%= game.winner2 %> beat <%= game.loser1 %> and 
+      <%= game.date %> - <%= game.winner1 %> and <%= game.winner2 %> beat <%= game.loser1 %> and 
       <%= game.loser2 %>
   </article>
 <% end %>
