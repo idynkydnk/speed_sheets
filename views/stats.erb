@@ -1,5 +1,5 @@
 <% if @todays_stats.length > 0 %>
-	Today's Stats
+	<h2>Today's Stats</h2>
   <br></br>
   <% @todays_stats.each do |stat| %>
     <article>
@@ -10,7 +10,7 @@
   <br></br>
 <% end %>
 
-2017 Stats
+<h2>2017 Stats</h2>
 <br></br>
 <% @years_stats.each_with_index do |stat, x| %>
   <article>
