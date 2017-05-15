@@ -1,19 +1,49 @@
 <% if @todays_stats.length > 0 %>
-	<h2>Today's Stats</h2>
-  <br></br>
-  <% @todays_stats.each do |stat| %>
-    <article>
-      <%= stat[:player] %> - <%= stat[:wins] %>-<%= 
-        stat[:losses] %> - <%= stat[:win_percentage] %>%
-    </article>
-  <% end %>
-  <br></br>
+<table>
+  <caption>Today's Stats</caption>
+  <thead>
+    <tr>
+      <th scope="col" colspan="1">Player</th>
+      <th class="numbered_stats" scope="col" colspan="1">Wins</th>
+      <th class="numbered_stats" scope="col" colspan="1">Losses</th>
+      <th class="numbered_stats" scope="col" colspan="1">Win %</th>
+    </tr>
+  </thead>
+  <tbody>
+      <% @todays_stats.each do |stat| %>
+    <tr>
+        <td class="player_link"><a href="/players/<%= stat[:player] %>" > <%= stat[:player] %></a></td>
+        <td class="numbered_stats"><%= stat[:wins] %></td>
+        <td class="numbered_stats"><%= stat[:losses] %></td>
+        <td class="numbered_stats"><%= stat[:win_percentage] %>%</td>
+    </tr>
+      <% end %>
+  </tbody>
+</table>
 <% end %>
 
-<h2>2017 Stats</h2>
 <br></br>
-<% @years_stats.each_with_index do |stat, x| %>
-  <article>
-    <%= (x + 1).to_s %> <a href="/players/<%= stat[:player] %>" > <%= stat[:player] %></a> - <%= stat[:wins] %>-<%= stat[:losses] %> - <%= stat[:win_percentage] %>%  -  <%= stat[:total_games] %>
-  </article>
-<% end %>
+
+<table>
+  <caption>2017 Stats</caption>
+  <thead>
+    <tr>
+      <th class="rank" scope="col" colspan="1"># </th>
+      <th scope="col" colspan="1">Player</th>
+      <th class="numbered_stats" scope="col" colspan="1">Wins</th>
+      <th class="numbered_stats" scope="col" colspan="1">Losses</th>
+      <th class="numbered_stats" scope="col" colspan="1">Win %</th>
+    </tr>
+  </thead>
+  <tbody>
+      <% @years_stats.each_with_index do |stat, rank| %>
+    <tr>
+        <td class="rank"><%= (rank + 1).to_s %></td>
+        <td class="player_link"><a href="/players/<%= stat[:player] %>" > <%= stat[:player] %></td>
+        <td class="numbered_stats"><%= stat[:wins] %></td>
+        <td class="numbered_stats"><%= stat[:losses] %></td>
+        <td class="numbered_stats"><%= stat[:win_percentage] %>%</td>
+    </tr>
+      <% end %>
+  </tbody>
+</table>

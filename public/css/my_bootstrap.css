@@ -21,6 +21,16 @@ table {
 
 th, td {
   border-bottom: 1px solid #ddd;
+  height: 30px;
+}
+
+.player_link {
+  font-size: 16px;
+}
+
+.rank {
+  padding-right: 15px;
+  text-align: right;
 }
 
 caption {
