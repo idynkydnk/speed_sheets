@@ -13,6 +13,24 @@
   width:100%;
 }
 
+table {
+  max-width: 330px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+th, td {
+  border-bottom: 1px solid #ddd;
+}
+
+caption {
+  text-align: center;
+  font-size: 18px;
+}
+
+.numbered_stats {
+  text-align: center;
+}
 
 body {
   padding-top: 0px;

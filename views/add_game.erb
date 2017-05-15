@@ -46,19 +46,19 @@
   <caption>Today's Stats</caption>
   <thead>
     <tr>
-      <th scope="col" colspan="2">Player</th>
-      <th scope="col" colspan="2">wins</th>
-      <th scope="col" colspan="2">losses</th>
-      <th scope="col" colspan="2">Win %</th>
+      <th scope="col" colspan="1">Player</th>
+      <th class="numbered_stats" scope="col" colspan="1">Wins</th>
+      <th class="numbered_stats" scope="col" colspan="1">Losses</th>
+      <th class="numbered_stats" scope="col" colspan="1">Win %</th>
     </tr>
   </thead>
   <tbody>
       <% @todays_stats.each do |stat| %>
     <tr>
         <td><%= stat[:player] %></td>
-        <td><%= stat[:wins] %></td>
-        <td><%= stat[:losses] %></td>
-        <td><%= stat[:win_percentage] %>%</td>
+        <td class="numbered_stats"><%= stat[:wins] %></td>
+        <td class="numbered_stats"><%= stat[:losses] %></td>
+        <td class="numbered_stats"><%= stat[:win_percentage] %>%</td>
     </tr>
       <% end %>
   </tbody>
