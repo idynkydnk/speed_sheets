@@ -42,9 +42,24 @@
 
 
 </section>
-
-<% @todays_stats.each do |stat| %>
-  <article>
-    <%= stat[:player] %> - <%= stat[:wins] %>-<%= stat[:losses] %> - <%= stat[:win_percentage] %>%
-  </article>
-<% end %>
+<table>
+  <caption>Today's Stats</caption>
+  <thead>
+    <tr>
+      <th scope="col" colspan="2">Player</th>
+      <th scope="col" colspan="2">wins</th>
+      <th scope="col" colspan="2">losses</th>
+      <th scope="col" colspan="2">Win %</th>
+    </tr>
+  </thead>
+  <tbody>
+      <% @todays_stats.each do |stat| %>
+    <tr>
+        <td><%= stat[:player] %></td>
+        <td><%= stat[:wins] %></td>
+        <td><%= stat[:losses] %></td>
+        <td><%= stat[:win_percentage] %>%</td>
+    </tr>
+      <% end %>
+  </tbody>
+</table>

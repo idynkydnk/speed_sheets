@@ -8,13 +8,10 @@
 .autocomplete-suggestion b { font-weight: normal; color: #1f8dd6; }
 .autocomplete-suggestion.selected { background: #f0f0f0; }
 
-article{font-size:12px;}
 
 .myInputs{
   width:100%;
 }
-
-
 
 
 body {
@@ -24,12 +21,14 @@ body {
 }
 
 p {
-  max-width: 330px;
-  padding: 15px;
-  margin: 0 auto;
-  text-align: center;
   font-size: 16px;
 }
+
+.stats {
+  max-width: 330px;
+  margin: 0 auto;
+}
+
 
 h1 {
   max-width: 330px;
