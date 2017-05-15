@@ -45,8 +45,6 @@
 
 <% @todays_stats.each do |stat| %>
   <article>
-    <p>
     <%= stat[:player] %> - <%= stat[:wins] %>-<%= stat[:losses] %> - <%= stat[:win_percentage] %>%
-    </p>
   </article>
 <% end %>
