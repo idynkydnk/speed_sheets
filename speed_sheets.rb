@@ -4,11 +4,11 @@ require 'data_mapper'
 require 'google_drive'
 
 configure :development do
- DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/recall.db") 
+  DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/recall.db") 
 end
 
 configure :production do
-    DataMapper.setup(:default, ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
+  DataMapper.setup(:default, ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
 end
 
 class Game
@@ -34,14 +34,16 @@ get '/' do
 end
 
 get '/reload_database' do
-  "disabled"
+ # "disabled"
   #delete_database
-  #reload_database
+  reload_database
+  "reloaded"
 end
 
 get '/delete_database' do
-  "disabled"
-  #delete_database
+  #"disabled"
+  delete_database
+  "deleted"
 end
 
 def reload_database
@@ -182,7 +184,7 @@ def todays_stats
           :win_percentage => win_percent }
     name_and_stats.push(x)
   end
-  name_and_stats.sort! { |a,b| b[:wins] <=> a[:wins] }
+  name_and_stats.sort! { |a,b| b[:win_percentage] <=> a[:win_percentage] }
 end
 
 def todays_games
