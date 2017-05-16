@@ -255,6 +255,11 @@ def teams
     else
       all_teams << team
     end
+    team = game.loser1 + " and " + game.loser2 
+    if all_teams.include?(team) 
+    else
+      all_teams << team
+    end
   end
   all_teams.sort! { |a,b| a <=> b }
 end
@@ -287,7 +292,18 @@ def top_teams
       stats << stat
     end
   end
-  stats.sort! { |a,b| b[:win_percentage] <=> a[:win_percentage] }
+  x = format_teams(stats)
+  x.sort! { |a,b| b[:win_percentage] <=> a[:win_percentage] }
+end
+
+def format_teams(stats)
+  formatted_team = []
+  stats.each do |stat|
+    players = stat[:team].split(" and ")
+    stat[:player1] = players[0]
+    stat[:player2] = players[1]
+    formatted_team << stat
+  end
 end
 
 def player_stats
