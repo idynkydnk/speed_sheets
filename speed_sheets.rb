@@ -298,7 +298,7 @@ def player_stats
     end
   end
   x = format_teamates(@player, stats)
-  x.sort! { |a,b| b[:total_games] <=> a[:total_games] }
+  x.sort! { |a,b| b[:win_percentage] <=> a[:win_percentage] }
 end
 
 def format_teamates(player, stats)
