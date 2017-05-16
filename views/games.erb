@@ -1,8 +1,19 @@
-Games
-<br></br>
-<% @games.each do |game| %>
-  <article>
-      <%= game.date %> - <%= game.winner1 %> and <%= game.winner2 %> beat <%= game.loser1 %> and 
-      <%= game.loser2 %>
-  </article>
-<% end %>
+<table class="games">
+  <caption>2017 Games</caption>
+  <thead>
+    <tr>
+      <th class="date" scope="col" colspan="1">Date</th>
+      <th scope="col" colspan="1">Winner</th>
+       <th scope="col" colspan="1">Loser</th>
+    </tr>
+  </thead>
+  <tbody>
+      <% @games.each do |game| %>
+    <tr>
+        <td class="date"><%= game.date %></td>
+        <td><a href="/players/<%= game.winner1 %>" ><%= game.winner1 %> /<br><a href="/players/<%= game.winner2 %>" ><%= game.winner2 %> </td>
+        <td><a href="/players/<%= game.loser1 %>" ><%= game.loser1 %> /<br><a href="/players/<%= game.loser2 %>" ><%= game.loser2 %> </td>
+    </tr>
+      <% end %>
+  </tbody>
+</table>

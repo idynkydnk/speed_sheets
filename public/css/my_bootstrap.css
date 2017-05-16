@@ -42,6 +42,10 @@ caption {
   text-align: center;
 }
 
+.date {
+  padding-right: 15px;
+}
+
 body {
   padding-top: 0px;
   padding-bottom: 40px;
