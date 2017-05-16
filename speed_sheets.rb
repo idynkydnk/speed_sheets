@@ -34,16 +34,16 @@ get '/' do
 end
 
 get '/reload_database' do
- # "disabled"
+  "disabled"
   #delete_database
-  reload_database
-  "reloaded"
+  #reload_database
+  #{}"reloaded"
 end
 
 get '/delete_database' do
-  #"disabled"
-  delete_database
-  "deleted"
+  "disabled"
+  #delete_database
+  #"deleted"
 end
 
 def reload_database
@@ -306,7 +306,7 @@ def format_teamates(player, stats)
   stats.each do |stat|
     players = stat[:team].split(" and ")
     player == players[0] ? partner = players[1] : partner = players[0]
-    stat[:team] = "With " + partner
+    stat[:team] = partner
     formatted_team << stat
   end
 end
