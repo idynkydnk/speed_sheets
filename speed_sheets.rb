@@ -74,6 +74,12 @@ get '/players/:player' do |player|
   erb :player_stats
 end
 
+get '/no_kyle' do
+  @games = Game.all :order => :id.desc
+  @no_kyle_stats = no_kyle_stats
+  erb :no_kyle
+end
+
 get '/top_teams' do
   @min_games = 10
   @games = Game.all
@@ -240,6 +246,33 @@ def years_stats
     x = { :player => player, :wins => wins, :losses => losses, 
           :win_percentage => win_percent, :total_games => total_games }
     name_and_stats.push(x) unless x[:total_games] < @min_games
+  end
+  name_and_stats.sort! { |a,b| b[:win_percentage] <=> a[:win_percentage] }
+end
+
+def no_kyle_stats
+  name_and_stats = [] 
+  players = all_players
+  players.each do |player|
+    wins, losses = 0, 0
+    @games.each do |game|
+      if game.winner1 == "Kyle Thomson" ||
+          game.winner2 == "Kyle Thomson" ||
+          game.loser1 == "Kyle Thomson" ||
+          game.loser2 == "Kyle Thomson"
+        next
+      end
+      if player == game.winner1 || player == game.winner2
+        wins += 1
+      elsif player == game.loser1 || player == game.loser2
+        losses += 1
+      end
+    end
+    win_percent = "%.2f" % (wins.to_f / (wins + losses).to_f * 100.0)
+    total_games = wins + losses
+    x = { :player => player, :wins => wins, :losses => losses, 
+          :win_percentage => win_percent, :total_games => total_games }
+    name_and_stats.push(x) unless total_games < 5
   end
   name_and_stats.sort! { |a,b| b[:win_percentage] <=> a[:win_percentage] }
 end
