@@ -215,14 +215,10 @@ end
 def all_players
   players = []
   @games.each do |game|
-    players << game.winner1 unless players.include?(game.winner1) || 
-      game.winner1.include?("???")
-    players << game.winner2 unless players.include?(game.winner2) || 
-      game.winner2.include?("???")
-    players << game.loser1 unless players.include?(game.loser1) || 
-      game.loser1.include?("???")
-    players << game.loser2 unless players.include?(game.loser2) || 
-      game.loser2.include?("???")
+    players << game.winner1 unless players.include?(game.winner1)
+    players << game.winner2 unless players.include?(game.winner2)
+    players << game.loser1 unless players.include?(game.loser1) 
+    players << game.loser2 unless players.include?(game.loser2) 
   end
   return players
 end
@@ -315,7 +311,7 @@ def player_stats
     end
   end
   x = format_teamates(@player, stats)
-  x.sort! { |a,b| b[:win_percentage] <=> a[:win_percentage] }
+  x.sort! { |a,b| b[:total_games] <=> a[:total_games] }
 end
 
 def format_teamates(player, stats)
@@ -367,5 +363,5 @@ def opponent_stats
           :win_percentage => win_percent, :total_games => total_games }
     stats.push(x) unless total_games == 0
   end
-  stats.sort! { |a,b| a[:opponent] <=> b[:opponent] }
+  stats.sort! { |a,b| b[:total_games] <=> a[:total_games] }
 end
