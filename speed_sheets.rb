@@ -70,6 +70,7 @@ get '/players/:player' do |player|
   @team_stats = team_stats
   @player = player
   @player_stats = player_stats
+  @opponent_stats = opponent_stats
   erb :player_stats
 end
 
@@ -325,4 +326,46 @@ def format_teamates(player, stats)
     stat[:team] = partner
     formatted_team << stat
   end
+end
+
+def all_player_games
+  players_games = []
+  @games.each do |game|
+    if game.winner1 == @player ||
+        game.winner2 == @player ||
+        game.loser1 == @player ||
+        game.loser2 == @player  
+      players_games << game
+    end
+  end
+end
+
+def opponent_stats
+  stats = [] 
+  player_games = all_player_games
+  all_players.each do |opponent|
+    wins, losses = 0, 0
+    player_games.each do |game|
+      if game.winner1 == @player ||
+          game.winner2 == @player
+        if game.loser1 == opponent ||
+            game.loser2 == opponent
+          wins += 1
+        end 
+      end
+      if game.loser1 == @player ||
+          game.loser2 == @player
+        if game.winner1 == opponent ||
+            game.winner2 == opponent
+          losses += 1
+        end 
+      end
+    end
+    win_percent = "%.2f" % (wins.to_f / (wins + losses).to_f * 100.0)
+    total_games = wins + losses
+    x = { :opponent => opponent, :wins => wins, :losses => losses, 
+          :win_percentage => win_percent, :total_games => total_games }
+    stats.push(x) unless total_games == 0
+  end
+  stats.sort! { |a,b| a[:opponent] <=> b[:opponent] }
 end
