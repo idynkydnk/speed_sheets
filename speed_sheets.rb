@@ -74,6 +74,15 @@ get '/players/:player' do |player|
   erb :player_stats
 end
 
+get '/players/no_kyle/:player' do |player|
+  @games = Game.all
+  @team_stats = no_kyle_team_stats
+  @player = player
+  @player_stats = player_stats
+  @opponent_stats = no_kyle_opponent_stats
+  erb :player_stats
+end
+
 get '/no_kyle' do
   @games = Game.all :order => :id.desc
   @no_kyle_stats = no_kyle_stats
@@ -315,6 +324,33 @@ def team_stats
   stats.sort! { |a,b| a[:team] <=> b[:team] }
 end
 
+def no_kyle_team_stats
+  stats = []
+  all_teams = teams
+  all_teams.each do |team|
+    wins, losses = 0, 0
+    @games.each do |game|
+      if game.winner1 == "Kyle Thomson" ||
+          game.winner2 == "Kyle Thomson" ||
+          game.loser1 == "Kyle Thomson" ||
+          game.loser2 == "Kyle Thomson"
+        next
+      end
+      if team == game.winner1 + " and " + game.winner2
+        wins += 1 
+      elsif team == game.loser1 + " and " + game.loser2
+        losses += 1 
+      end
+    end
+    win_percent = "%.2f" % (wins.to_f / (wins + losses).to_f * 100.0)
+    total_games = wins + losses
+    x = { :team => team, :wins => wins, :losses => losses, 
+          :win_percentage => win_percent, :total_games => total_games }
+    stats.push(x) unless total_games == 0
+  end
+  stats.sort! { |a,b| a[:team] <=> b[:team] }
+end
+
 def top_teams
   stats = []
   @all_stats.each do |stat|
@@ -340,7 +376,7 @@ def player_stats
   stats = []
   @team_stats.each do |stat|
     if stat[:team].include?(@player)
-      stats << stat 
+      stats << stat
     end
   end
   x = format_teamates(@player, stats)
@@ -375,6 +411,42 @@ def opponent_stats
   all_players.each do |opponent|
     wins, losses = 0, 0
     player_games.each do |game|
+      if game.winner1 == @player ||
+          game.winner2 == @player
+        if game.loser1 == opponent ||
+            game.loser2 == opponent
+          wins += 1
+        end 
+      end
+      if game.loser1 == @player ||
+          game.loser2 == @player
+        if game.winner1 == opponent ||
+            game.winner2 == opponent
+          losses += 1
+        end 
+      end
+    end
+    win_percent = "%.2f" % (wins.to_f / (wins + losses).to_f * 100.0)
+    total_games = wins + losses
+    x = { :opponent => opponent, :wins => wins, :losses => losses, 
+          :win_percentage => win_percent, :total_games => total_games }
+    stats.push(x) unless total_games == 0
+  end
+  stats.sort! { |a,b| b[:total_games] <=> a[:total_games] }
+end
+
+def no_kyle_opponent_stats
+  stats = [] 
+  player_games = all_player_games
+  all_players.each do |opponent|
+    wins, losses = 0, 0
+    player_games.each do |game|
+      if game.winner1 == "Kyle Thomson" ||
+          game.winner2 == "Kyle Thomson" ||
+          game.loser1 == "Kyle Thomson" ||
+          game.loser2 == "Kyle Thomson"
+        next
+      end
       if game.winner1 == @player ||
           game.winner2 == @player
         if game.loser1 == opponent ||
