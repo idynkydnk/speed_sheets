@@ -239,7 +239,7 @@ def all_players
 end
 
 def years_stats
-  name_and_stats = [] 
+  name_and_stats = []
   players = all_players
   players.each do |player|
     wins, losses = 0, 0
@@ -254,9 +254,10 @@ def years_stats
     total_games = wins + losses
     x = { :player => player, :wins => wins, :losses => losses, 
           :win_percentage => win_percent, :total_games => total_games }
-    name_and_stats.push(x) unless x[:total_games] < @min_games
+    name_and_stats << x unless x[:total_games] < @min_games
   end
-  name_and_stats.sort! { |a,b| b[:win_percentage] <=> a[:win_percentage] }
+  name_and_stats.sort_by! { |a| a[:win_percentage].to_i}
+  name_and_stats.reverse
 end
 
 def no_kyle_stats
