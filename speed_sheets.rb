@@ -383,7 +383,8 @@ def player_stats
     end
   end
   x = format_teamates(@player, stats)
-  x.sort! { |a,b| b[:total_games] <=> a[:total_games] }
+  x.sort_by! { |a| a[:win_percentage].to_i}
+  x.reverse
 end
 
 def format_teamates(player, stats)
@@ -435,7 +436,8 @@ def opponent_stats
           :win_percentage => win_percent, :total_games => total_games }
     stats.push(x) unless total_games == 0
   end
-  stats.sort! { |a,b| b[:total_games] <=> a[:total_games] }
+  stats.sort_by! { |a| a[:win_percentage].to_i}
+  stats.reverse
 end
 
 def no_kyle_opponent_stats
