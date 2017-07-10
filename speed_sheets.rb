@@ -284,7 +284,8 @@ def no_kyle_stats
           :win_percentage => win_percent, :total_games => total_games }
     name_and_stats.push(x) unless total_games < 5
   end
-  name_and_stats.sort! { |a,b| b[:win_percentage] <=> a[:win_percentage] }
+  name_and_stats.sort_by! { |a| a[:win_percentage].to_i}
+  name_and_stats.reverse
 end
 
 def teams
@@ -360,7 +361,8 @@ def top_teams
     end
   end
   x = format_teams(stats)
-  x.sort! { |a,b| b[:win_percentage] <=> a[:win_percentage] }
+  x.sort_by! { |a| a[:win_percentage].to_i}
+  x.reverse
 end
 
 def format_teams(stats)
