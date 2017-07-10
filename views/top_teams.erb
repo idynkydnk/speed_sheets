@@ -13,7 +13,7 @@
       <% @top_teams.each_with_index do |stat, rank| %>
     <tr>
         <td class="rank"><%= (rank + 1).to_s %></td>
-        <td class="player_link"><a href="/players/<%= stat[:team] %>" > <%= stat[:player1] %> /<br><a href="/players/<%= stat[:team] %>" > <%= stat[:player2] %> </td>
+        <td class="player_link"><a href="/players/<%= stat[:player1] %>" > <%= stat[:player1] %> /<br><a href="/players/<%= stat[:player2] %>" > <%= stat[:player2] %> </td>
         <td class="numbered_stats"><%= stat[:wins] %></td>
         <td class="numbered_stats"><%= stat[:losses] %></td>
         <td class="numbered_stats"><%= stat[:win_percentage] %>%</td>
