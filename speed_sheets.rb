@@ -358,9 +358,7 @@ end
 def top_teams
   stats = []
   @all_stats.each do |stat|
-    if stat[:total_games] > @min_games
-      stats << stat
-    end
+    stats << stat unless stat[:total_games] < @min_games
   end
   x = format_teams(stats)
   x.sort_by! { |a| a[:win_percentage].to_f}
