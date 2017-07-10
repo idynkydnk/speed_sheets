@@ -67,6 +67,7 @@ end
 
 get '/players/:player' do |player|
   @games = Game.all
+  @min_games = 5
   @team_stats = team_stats
   @player = player
   @player_stats = player_stats
@@ -200,7 +201,8 @@ def todays_stats
           :win_percentage => win_percent }
     name_and_stats.push(x)
   end
-  name_and_stats.sort! { |a,b| b[:win_percentage] <=> a[:win_percentage] }
+  name_and_stats.sort_by! { |a| a[:win_percentage].to_f}
+  name_and_stats.reverse
 end
 
 def todays_games
@@ -379,7 +381,7 @@ def player_stats
   stats = []
   @team_stats.each do |stat|
     if stat[:team].include?(@player)
-      stats << stat
+      stats << stat unless stat[:total_games] < @min_games
     end
   end
   x = format_teamates(@player, stats)
@@ -434,7 +436,7 @@ def opponent_stats
     total_games = wins + losses
     x = { :opponent => opponent, :wins => wins, :losses => losses, 
           :win_percentage => win_percent, :total_games => total_games }
-    stats.push(x) unless total_games == 0
+    stats.push(x) unless total_games < @min_games
   end
   stats.sort_by! { |a| a[:win_percentage].to_f}
   stats.reverse
