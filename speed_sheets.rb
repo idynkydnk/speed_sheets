@@ -256,7 +256,7 @@ def years_stats
           :win_percentage => win_percent, :total_games => total_games }
     name_and_stats << x unless x[:total_games] < @min_games
   end
-  name_and_stats.sort_by! { |a| a[:win_percentage].to_i}
+  name_and_stats.sort_by! { |a| a[:win_percentage].to_f}
   name_and_stats.reverse
 end
 
@@ -284,7 +284,7 @@ def no_kyle_stats
           :win_percentage => win_percent, :total_games => total_games }
     name_and_stats.push(x) unless total_games < 5
   end
-  name_and_stats.sort_by! { |a| a[:win_percentage].to_i}
+  name_and_stats.sort_by! { |a| a[:win_percentage].to_f}
   name_and_stats.reverse
 end
 
@@ -361,7 +361,7 @@ def top_teams
     end
   end
   x = format_teams(stats)
-  x.sort_by! { |a| a[:win_percentage].to_i}
+  x.sort_by! { |a| a[:win_percentage].to_f}
   x.reverse
 end
 
@@ -383,7 +383,7 @@ def player_stats
     end
   end
   x = format_teamates(@player, stats)
-  x.sort_by! { |a| a[:win_percentage].to_i}
+  x.sort_by! { |a| a[:win_percentage].to_f}
   x.reverse
 end
 
@@ -436,7 +436,7 @@ def opponent_stats
           :win_percentage => win_percent, :total_games => total_games }
     stats.push(x) unless total_games == 0
   end
-  stats.sort_by! { |a| a[:win_percentage].to_i}
+  stats.sort_by! { |a| a[:win_percentage].to_f}
   stats.reverse
 end
 
