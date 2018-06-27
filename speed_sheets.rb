@@ -27,7 +27,7 @@ DataMapper.finalize.auto_upgrade!
 
 get '/' do
   @games = Game.all :order => :id.desc
-  @min_games = 20
+  @min_games = 2
   @todays_stats = todays_stats
   @years_stats = years_stats
   erb :stats
