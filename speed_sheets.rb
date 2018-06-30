@@ -112,7 +112,6 @@ get '/add_game' do
 end
 
 get '/add_player' do
-  hi there
   erb :add_player
 end
 
