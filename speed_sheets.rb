@@ -111,6 +111,11 @@ get '/add_game' do
   erb :add_game
 end
 
+get '/add_player' do
+  hi there
+  erb :add_player
+end
+
 get '/games' do
   @games = Game.all :order => :id.desc
   erb :games
