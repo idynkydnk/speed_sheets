@@ -115,6 +115,11 @@ get '/add_player' do
   erb :add_player
 end
 
+post '/add_player' do
+
+  redirect '/add_game'
+end
+
 get '/games' do
   @games = Game.all :order => :id.desc
   erb :games
@@ -127,7 +132,7 @@ end
 
 post '/add_game' do
   n = Game.new
-  n.location = params[:location]
+  n.location = "TK"
   n.winner1 = params[:winner1]
   n.winner2 = params[:winner2]
   n.loser1 = params[:loser1]
@@ -159,7 +164,7 @@ end
 
 put '/:id' do
   n = Game.get params[:id]
-  n.location = params[:location]
+  n.location = "TK"
   n.winner1 = params[:winner1]
   n.winner2 = params[:winner2]
   n.loser1 = params[:loser1]
