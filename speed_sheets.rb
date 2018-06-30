@@ -22,6 +22,12 @@ class Game
   property :date, Text
   property :updated_at, DateTime
 end
+
+class Player
+  include DataMapper::Resource
+  property :id, Serial
+  property :player, Text, :required => true
+end
  
 DataMapper.finalize.auto_upgrade!
 
@@ -63,6 +69,11 @@ def reload_database
     x.loser2 = sheet[row, 6]
     x.save
   end 
+end
+
+get '/all_players' do
+  @players = Player.all
+  erb :all_players
 end
 
 get '/players/:player' do |player|
@@ -116,7 +127,9 @@ get '/add_player' do
 end
 
 post '/add_player' do
-
+  n = Player.new
+  n.player = params[:player]
+  puts n.player
   redirect '/add_game'
 end
 
