@@ -285,7 +285,7 @@ var autowinner2 = new autoComplete({
   minChars: 0,
   source: function(term, suggest){
     term = term.toLowerCase();
-    var choices = ["Kyle Thomson","Chris Goshow","Chris Dedo","Evan Murray","Ryan Aikens","Chris Jones","Brady Donahue","Mike Ciav","Alex Amylon","Ike Isenhour","Ryan Donahue","Jeff Zhao","Tyler ???","Louis ???","Vinny ???","Cole Constantino","Hawk Hatcher","Tyler Bird","Brian Bowie","Aaron Plumb","Denis Buznea","Kevin Legg","Kurt Frahn","Ryan Schmidt","Nic Stojak","Mike Kuk","Ian Marvel","Matt Sokolowski","Dustin Rambo","Troy Nowak"]
+    var choices = all_choices
 ;
     var suggestions = [];
     for (i=0;i<choices.length;i++)
@@ -299,7 +299,7 @@ var autoloser1 = new autoComplete({
   minChars: 0,
   source: function(term, suggest){
     term = term.toLowerCase();
-    var choices = ["Kyle Thomson","Chris Goshow","Chris Dedo","Evan Murray","Ryan Aikens","Chris Jones","Brady Donahue","Mike Ciav","Alex Amylon","Ike Isenhour","Ryan Donahue","Jeff Zhao","Tyler ???","Louis ???","Vinny ???","Cole Constantino","Hawk Hatcher","Tyler Bird","Brian Bowie","Aaron Plumb","Denis Buznea","Kevin Legg","Kurt Frahn","Ryan Schmidt","Nic Stojak","Mike Kuk","Ian Marvel","Matt Sokolowski","Dustin Rambo","Troy Nowak"]
+    var choices = all_choices 
 ;
     var suggestions = [];
     for (i=0;i<choices.length;i++)
@@ -313,7 +313,7 @@ var autoloser2 = new autoComplete({
   minChars: 0,
   source: function(term, suggest){
     term = term.toLowerCase();
-    var choices = ["Kyle Thomson","Chris Goshow","Chris Dedo","Evan Murray","Ryan Aikens","Chris Jones","Brady Donahue","Mike Ciav","Alex Amylon","Ike Isenhour","Ryan Donahue","Jeff Zhao","Tyler ???","Louis ???","Vinny ???","Cole Constantino","Hawk Hatcher","Tyler Bird","Brian Bowie","Aaron Plumb","Denis Buznea","Kevin Legg","Kurt Frahn","Ryan Schmidt","Nic Stojak","Mike Kuk","Ian Marvel","Matt Sokolowski","Dustin Rambo","Troy Nowak"]
+    var choices = all_choices 
 ;
     var suggestions = [];
     for (i=0;i<choices.length;i++)
