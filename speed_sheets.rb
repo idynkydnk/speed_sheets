@@ -123,6 +123,7 @@ get '/add_game' do
 end
 
 get '/add_player' do
+  @players = Player.all
   erb :add_player
 end
 
@@ -130,7 +131,8 @@ post '/add_player' do
   n = Player.new
   n.player = params[:player]
   puts n.player
-  redirect '/add_game'
+  n.save
+  redirect '/add_player'
 end
 
 get '/games' do
