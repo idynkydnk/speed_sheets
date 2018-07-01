@@ -118,6 +118,12 @@ end
 
 get '/add_game' do
   @games = Game.all :order => :id.desc
+  @players = Player.all
+  players = []
+  @players.each do |player|
+    players << player.player
+  end
+  @players = players
   @todays_stats = todays_stats
   erb :add_game
 end
@@ -130,7 +136,6 @@ end
 post '/add_player' do
   n = Player.new
   n.player = params[:player]
-  puts n.player
   n.save
   redirect '/add_player'
 end
