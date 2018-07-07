@@ -140,6 +140,11 @@ post '/add_player' do
   redirect '/add_player'
 end
 
+get '/edit_players' do
+  @players = Player.all
+  erb :edit_players
+end
+
 get '/games' do
   @games = Game.all :order => :id.desc
   erb :games
