@@ -128,33 +128,6 @@ get '/add_game' do
   erb :add_game
 end
 
-get '/add_player' do
-  @players = Player.all
-  erb :add_player
-end
-
-post '/add_player' do
-  n = Player.new
-  n.player = params[:player]
-  n.save
-  redirect '/add_player'
-end
-
-get '/edit_players' do
-  @players = Player.all
-  erb :edit_players
-end
-
-get '/games' do
-  @games = Game.all :order => :id.desc
-  erb :games
-end
-
-get '/edit_games' do
-  @games = Game.all :order => :id.desc
-  erb :edit_games
-end
-
 post '/add_game' do
   n = Game.new
   n.location = "TK"
@@ -172,13 +145,32 @@ post '/add_game' do
   redirect '/add_game'
 end
 
-def my_time_now
-  month = Time.now.month.to_s
-  day = Time.now.day.to_s
-  year = Time.now.year.to_s
-  month = "0" + month if month.length < 2
-  day = "0" + day if day.length < 2
-  return month + "/" + day + "/" + year
+get '/add_player' do
+  @players = Player.all
+  erb :add_player
+end
+
+post '/add_player' do
+  n = Player.new
+  n.player = params[:player]
+  n.save
+  redirect '/add_player'
+end
+
+get '/player/delete/:id' do
+  n = Player.get params[:id]
+  n.destroy
+  redirect '/all_players'
+end
+
+get '/games' do
+  @games = Game.all :order => :id.desc
+  erb :games
+end
+
+get '/edit_games' do
+  @games = Game.all :order => :id.desc
+  erb :edit_games
 end
 
 get '/:id' do
@@ -211,6 +203,15 @@ delete '/:id' do
   n = Game.get params[:id]
   n.destroy
   redirect '/games'
+end
+
+def my_time_now
+  month = Time.now.month.to_s
+  day = Time.now.day.to_s
+  year = Time.now.year.to_s
+  month = "0" + month if month.length < 2
+  day = "0" + day if day.length < 2
+  return month + "/" + day + "/" + year
 end
 
 def delete_database
