@@ -33,10 +33,12 @@ DataMapper.finalize.auto_upgrade!
 
 get '/' do
   @games = Game.all :order => :id.desc
-  @min_games = 1
   @todays_stats = todays_stats
+  @min_games = 1
+  @max_games = 15
   @years_stats = years_stats
   @min_games = 15
+  @max_games = 99999
   @min_years_stats = years_stats
   erb :stats
 end
@@ -293,7 +295,7 @@ def years_stats
     total_games = wins + losses
     x = { :player => player, :wins => wins, :losses => losses, 
           :win_percentage => win_percent, :total_games => total_games }
-    name_and_stats << x unless x[:total_games] < @min_games
+    name_and_stats << x unless x[:total_games] < @min_games || x[:total_games] >= @max_games
   end
   name_and_stats.sort_by! { |a| a[:win_percentage].to_f}
   name_and_stats.reverse
