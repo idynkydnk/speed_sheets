@@ -35,9 +35,9 @@ get '/' do
   @games = Game.all :order => :id.desc
   @todays_stats = todays_stats
   @min_games = 1
-  @max_games = 15
+  @max_games = 14
   @years_stats = years_stats
-  @min_games = 15
+  @min_games = 14
   @max_games = 99999
   @min_years_stats = years_stats
   erb :stats
