@@ -33,7 +33,7 @@ DataMapper.finalize.auto_upgrade!
 
 get '/' do
   @games = Game.all :order => :id.desc
-  @min_games = 2
+  @min_games = 15
   @todays_stats = todays_stats
   @years_stats = years_stats
   erb :stats
@@ -78,7 +78,7 @@ end
 
 get '/players/:player' do |player|
   @games = Game.all
-  @min_games = 1
+  @min_games = 5
   @team_stats = team_stats
   @player = player
   @player_stats = player_stats
@@ -102,7 +102,7 @@ get '/no_kyle' do
 end
 
 get '/top_teams' do
-  @min_games = 2
+  @min_games = 5
   @games = Game.all
   @all_stats = team_stats
   @top_teams = top_teams
@@ -111,7 +111,7 @@ end
 
 get '/team_stats' do
   @games = Game.all :order => :id.desc
-  @min_games = 2
+  @min_games = 5
   @team_stats = team_stats
   erb :team_stats
 end
