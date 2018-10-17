@@ -178,6 +178,12 @@ get '/edit_games' do
 end
 
 get '/:id' do
+  @players = Player.all
+  players = []
+  @players.each do |player|
+    players << player.player
+  end
+  @players = players
   @game = Game.get params[:id]
   @title = "Edit game ##{params[:id]}"
   erb :edit
@@ -190,7 +196,7 @@ put '/:id' do
   n.winner2 = params[:winner2]
   n.loser1 = params[:loser1]
   n.loser2 = params[:loser2]
-  n.updated_at = Time.now
+  #n.updated_at = Time.now
   if n.location != "" && n.winner1 != "" && n.winner2 != "" && n.loser1 != "" && n.loser2 != "" 
     n.save
   end

@@ -1,48 +1,48 @@
 <% if @game %>
-  <form action="/<%= @game.id %>" method="post" id="edit">
-    <input type="hidden" name="_method" value="put">
-    <section id="add">
-
+  <section id="add">
   <div class="myInputs">
+    <form class="form-signin" name="my_form" action="/<%= @game.id %>" method="post" id="edit">
+      <input type="hidden" name="_method" value="put"></input>
 
-  <form name="my_form" action="/" method="post">
-    <input id="auto-winner1" name="winner1" placeholder="Winner first player&hellip;"></input>
-    <br><br><br>
-    <input id="auto-winner2" name="winner2" placeholder="Winner second player&hellip;"></input>
-    <br><br><br>
-    <input id="auto-loser1" name="loser1" placeholder="Loser first player&hellip;"></input>
-    <br><br><br>
-    <input id="auto-loser2" name="loser2" placeholder="Loser second player&hellip;"></input>
-    <br><br><br>
-    <input type="submit" value="Submit!">
-  </form>
-
+      <input id="auto-winner1" class="form-control" name="winner1" placeholder="Winner first player&hellip;"></input>
+      <br><br>
+      <input id="auto-winner2" class="form-control" name="winner2" placeholder="Winner second player&hellip;"></input>
+      <br><br>
+      <input id="auto-loser1" class="form-control" name="loser1" placeholder="Loser first player&hellip;"></input>
+      <br><br>
+      <input id="auto-loser2" class="form-control" name="loser2" placeholder="Loser second player&hellip;"></input>
+      <br><br>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Edit Game</button>
+    </form>
   </div>
 
+  <script src="/js/auto-complete.js"></script>  
+  <script> 
+    var all_choices = <%= @players %>;
+  </script> 
 
-<script src="/js/auto-complete.js"></script> 
-<script> 
-  $('#auto-winner1').on('focus', function() {
-   document.body.scrollTop += this.getBoundingClientRect().top - 1;
-  });
-  $('#auto-winner2').on('focus', function() {
-   document.body.scrollTop += this.getBoundingClientRect().top - 1;
-  });
-  $('#auto-loser1').on('focus', function() {
-   document.body.scrollTop += this.getBoundingClientRect().top - 1;
-  });
-  $('#auto-loser2').on('focus', function() {
-   document.body.scrollTop += this.getBoundingClientRect().top - 1;
-  });
-</script>
+  <script> 
+    $('#auto-winner1').on('focus', function() {
+    document.body.scrollTop += this.getBoundingClientRect().top - 1;
+    });
+    $('#auto-winner2').on('focus', function() {
+    document.body.scrollTop += this.getBoundingClientRect().top - 1;
+    });
+    $('#auto-loser1').on('focus', function() {
+    document.body.scrollTop += this.getBoundingClientRect().top - 1;
+    });
+    $('#auto-loser2').on('focus', function() {
+    document.body.scrollTop += this.getBoundingClientRect().top - 1;
+    });
+  </script>
 
-
-</section>
-  </form>
   <p><a href="/<%= @game.id %>/delete">Delete</a></p>
 <% else %>
   <p>Game not found.</p>
 <% end %>
+
+</section>
+
 <br><br><br>
 <br><br><br>
 <br><br><br>
