@@ -1,0 +1,84 @@
+<% if @todays_stats.length > 0 %>
+<table>
+  <caption>Today's Stats</caption>
+  <thead>
+    <tr>
+      <th scope="col" colspan="1">Player</th>
+      <th class="numbered_stats" scope="col" colspan="1">Wins</th>
+      <th class="numbered_stats" scope="col" colspan="1">Losses</th>
+      <th class="numbered_stats" scope="col" colspan="1">Win %</th>
+    </tr>
+  </thead>
+  <tbody>
+      <% @todays_stats.each do |stat| %>
+    <tr>
+        <td class="player_link"><a href="/players/<%= stat[:player] %>" > <%= stat[:player] %></a></td>
+        <td class="numbered_stats"><%= stat[:wins] %></td>
+        <td class="numbered_stats"><%= stat[:losses] %></td>
+        <td class="numbered_stats"><%= stat[:win_percentage] %>%</td>
+    </tr>
+      <% end %>
+  </tbody>
+</table>
+<br></br>
+<% end %>
+
+
+
+<table>
+  <caption>2018 Stats</caption>
+  <thead>
+    <tr>
+      <th class="rank" scope="col" colspan="1"># </th>
+      <th scope="col" colspan="1">Player</th>
+      <th class="numbered_stats" scope="col" colspan="1">Wins</th>
+      <th class="numbered_stats" scope="col" colspan="1">Losses</th>
+      <th class="numbered_stats" scope="col" colspan="1">Win %</th>
+      <th class="numbered_stats" scope="col" colspan="1">Games</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <% @min_years_stats.each_with_index do |stat, rank| %>
+    <tr>
+        <td class="rank"><%= (rank + 1).to_s %></td>
+        <td class="player_link"><a href="/players/<%= stat[:player] %>" > <%= stat[:player] %></td>
+        <td class="numbered_stats"><%= stat[:wins] %></td>
+        <td class="numbered_stats"><%= stat[:losses] %></td>
+        <td class="numbered_stats"><%= stat[:win_percentage] %>%</td>
+        <td class="numbered_stats"><%= stat[:total_games] %></td>
+    </tr>
+    <% end %>
+
+  </tbody>
+</table>
+
+<br></br><br></br><br></br>
+
+<table>
+  <caption>Less than <%= @min_games.to_s %> games</caption>
+  <thead>
+    <tr>
+      <th class="rank" scope="col" colspan="1"># </th>
+      <th scope="col" colspan="1">Player</th>
+      <th class="numbered_stats" scope="col" colspan="1">Wins</th>
+      <th class="numbered_stats" scope="col" colspan="1">Losses</th>
+      <th class="numbered_stats" scope="col" colspan="1">Win %</th>
+      <th class="numbered_stats" scope="col" colspan="1">Games</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <% @years_stats.each_with_index do |stat, rank| %>
+    <tr>
+        <td class="rank"><%= (rank + 1).to_s %></td>
+        <td class="player_link"><a href="/players/<%= stat[:player] %>" > <%= stat[:player] %></td>
+        <td class="numbered_stats"><%= stat[:wins] %></td>
+        <td class="numbered_stats"><%= stat[:losses] %></td>
+        <td class="numbered_stats"><%= stat[:win_percentage] %>%</td>
+        <td class="numbered_stats"><%= stat[:total_games] %></td>
+    </tr>
+    <% end %>
+
+  </tbody>
+</table>

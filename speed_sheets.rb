@@ -29,7 +29,7 @@ class Player
   property :player, Text, :required => true
 end
 
-class Vollis
+class Vollisgame
   include DataMapper::Resource
   property :id, Serial
   property :winner, Text, :required => true
@@ -51,6 +51,19 @@ get '/' do
   @min_years_stats = years_stats
   erb :stats
 end
+
+get '/vollis' do
+  @vollisgames = Vollis.all :order => :id.desc
+  @todays_stats = todays_stats
+  @min_games = 1
+  @max_games = 14
+  @years_stats = years_stats
+  @min_games = 20
+  @max_games = 99999
+  @min_years_stats = years_stats
+  erb :stats
+end
+
 
 get '/reload_database' do
   "disabled"
