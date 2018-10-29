@@ -37,7 +37,7 @@ get '/' do
   @min_games = 1
   @max_games = 14
   @years_stats = years_stats
-  @min_games = 14
+  @min_games = 20
   @max_games = 99999
   @min_years_stats = years_stats
   erb :stats
