@@ -64,6 +64,30 @@ get '/vollis' do
   erb :stats
 end
 
+get '/add_vollis_game' do
+  @vollisgames = Vollis.all :order => :id.desc
+  @players = Player.all
+  players = []
+  @players.each do |player|
+    players << player.player
+  end
+  @players = players
+  @todays_stats = todays_stats
+  erb :add_game
+end
+
+post '/add_vollis_game' do
+  n = Vollis.new
+  n.winner = params[:winner]
+  n.loser = params[:loser]
+  n.date = my_time_now 
+  n.updated_at = Time.now
+  if n.location != "" && n.winner != "" && n.loser != "" 
+    n.save
+  end
+  redirect '/add_vollis_game'
+end
+
 
 get '/reload_database' do
   "disabled"
