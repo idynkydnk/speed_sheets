@@ -28,6 +28,15 @@ class Player
   property :id, Serial
   property :player, Text, :required => true
 end
+
+class Vollis
+  include DataMapper::Resource
+  property :id, Serial
+  property :winner, Text, :required => true
+  property :loser, Text, :required => true
+  property :date, Text
+  property :updated_at, DateTime
+end
  
 DataMapper.finalize.auto_upgrade!
 
