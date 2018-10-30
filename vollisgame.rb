@@ -24,12 +24,7 @@ end
 
 get '/add_vollis_game' do
   @vollisgames = Vollisgame.all :order => :id.desc
-  @players = Player.all
-  players = []
-  @players.each do |player|
-    players << player.player
-  end
-  @players = players
+  @players = all_vollis_players
   @todays_vollis_stats = todays_vollis_stats
   erb :add_vollis_game
 end
