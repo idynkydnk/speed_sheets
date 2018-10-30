@@ -1,4 +1,4 @@
-<% if @todays_stats.length > 0 %>
+<% if @todays_vollis_stats.length > 0 %>
 <table>
   <caption>Today's Stats</caption>
   <thead>
@@ -10,7 +10,7 @@
     </tr>
   </thead>
   <tbody>
-      <% @todays_stats.each do |stat| %>
+      <% @todays_vollis_stats.each do |stat| %>
     <tr>
         <td class="player_link"><a href="/players/<%= stat[:player] %>" > <%= stat[:player] %></a></td>
         <td class="numbered_stats"><%= stat[:wins] %></td>
