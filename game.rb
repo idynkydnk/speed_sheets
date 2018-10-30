@@ -1,3 +1,7 @@
+
+require_relative 'player'
+require_relative 'vollisgame'
+
 class Game
   include DataMapper::Resource
   property :id, Serial
@@ -74,4 +78,52 @@ post '/add_game' do
     n.save
   end
   redirect '/add_game'
+end
+
+get '/games' do
+  @games = Game.all :order => :id.desc
+  erb :games
+end
+
+get '/edit_games' do
+  @games = Game.all :order => :id.desc
+  erb :edit_games
+end
+
+get '/:id' do
+  @players = Player.all
+  players = []
+  @players.each do |player|
+    players << player.player
+  end
+  @players = players
+  @game = Game.get params[:id]
+  @title = "Edit game ##{params[:id]}"
+  erb :edit
+end
+
+put '/:id' do
+  n = Game.get params[:id]
+  n.location = "TK"
+  n.winner1 = params[:winner1]
+  n.winner2 = params[:winner2]
+  n.loser1 = params[:loser1]
+  n.loser2 = params[:loser2]
+  #n.updated_at = Time.now
+  if n.location != "" && n.winner1 != "" && n.winner2 != "" && n.loser1 != "" && n.loser2 != "" 
+    n.save
+  end
+  redirect '/'
+end
+
+get '/:id/delete' do
+  @game = Game.get params[:id]
+  @title = "Confirm deletion of game ##{params[:id]}"
+  erb :delete
+end
+
+delete '/:id' do
+  n = Game.get params[:id]
+  n.destroy
+  redirect '/games'
 end

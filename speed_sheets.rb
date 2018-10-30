@@ -49,74 +49,6 @@ def reload_database
   end 
 end
 
-
-
-get '/add_player' do
-  @players = Player.all
-  erb :add_player
-end
-
-post '/add_player' do
-  n = Player.new
-  n.player = params[:player]
-  n.save
-  redirect '/add_player'
-end
-
-get '/player/delete/:id' do
-  n = Player.get params[:id]
-  n.destroy
-  redirect '/all_players'
-end
-
-get '/games' do
-  @games = Game.all :order => :id.desc
-  erb :games
-end
-
-get '/edit_games' do
-  @games = Game.all :order => :id.desc
-  erb :edit_games
-end
-
-get '/:id' do
-  @players = Player.all
-  players = []
-  @players.each do |player|
-    players << player.player
-  end
-  @players = players
-  @game = Game.get params[:id]
-  @title = "Edit game ##{params[:id]}"
-  erb :edit
-end
-
-put '/:id' do
-  n = Game.get params[:id]
-  n.location = "TK"
-  n.winner1 = params[:winner1]
-  n.winner2 = params[:winner2]
-  n.loser1 = params[:loser1]
-  n.loser2 = params[:loser2]
-  #n.updated_at = Time.now
-  if n.location != "" && n.winner1 != "" && n.winner2 != "" && n.loser1 != "" && n.loser2 != "" 
-    n.save
-  end
-  redirect '/'
-end
-
-get '/:id/delete' do
-  @game = Game.get params[:id]
-  @title = "Confirm deletion of game ##{params[:id]}"
-  erb :delete
-end
-
-delete '/:id' do
-  n = Game.get params[:id]
-  n.destroy
-  redirect '/games'
-end
-
 def my_time_now
   month = Time.now.month.to_s
   day = Time.now.day.to_s
@@ -187,49 +119,6 @@ def all_players
   return players
 end
 
-def todays_vollis_stats
-  name_and_stats = [] 
-  games = todays_vollis_games
-  players = todays_vollis_players(games)
-  players.each do |player|
-    wins, losses = 0, 0
-    games.each do |game|
-      if player == game.winner
-        wins += 1
-      elsif player == game.loser
-        losses += 1
-      end
-    end
-    win_percent = "%.2f" % (wins.to_f / (wins + losses).to_f * 100.0)
-    x = { :player => player, :wins => wins, :losses => losses, 
-          :win_percentage => win_percent }
-    name_and_stats.push(x)
-  end
-  name_and_stats.sort_by! { |a| a[:win_percentage].to_f}
-  name_and_stats.reverse
-end
-
-def todays_vollis_games
-  games = []
-  @vollisgames.each do |game|
-    if game.date[0..1].to_i == Time.now.month &&
-        game.date[3..4].to_i == Time.now.day &&
-        game.date[6..9].to_i == Time.now.year
-      games << game 
-    end
-  end
-  return games
-end
-
-def todays_vollis_players(games)
-  players = []
-  games.each do |game|
-    players << game.winner unless players.include?(game.winner)
-    players << game.loser unless players.include?(game.loser)
-  end
-  return players
-end
-
 def years_stats
   name_and_stats = []
   players = all_players
@@ -247,34 +136,6 @@ def years_stats
     x = { :player => player, :wins => wins, :losses => losses, 
           :win_percentage => win_percent, :total_games => total_games }
     name_and_stats << x unless x[:total_games] < @min_games || x[:total_games] >= @max_games
-  end
-  name_and_stats.sort_by! { |a| a[:win_percentage].to_f}
-  name_and_stats.reverse
-end
-
-def no_kyle_stats
-  name_and_stats = [] 
-  players = all_players
-  players.each do |player|
-    wins, losses = 0, 0
-    @games.each do |game|
-      if game.winner1 == "Kyle Thomson" ||
-          game.winner2 == "Kyle Thomson" ||
-          game.loser1 == "Kyle Thomson" ||
-          game.loser2 == "Kyle Thomson"
-        next
-      end
-      if player == game.winner1 || player == game.winner2
-        wins += 1
-      elsif player == game.loser1 || player == game.loser2
-        losses += 1
-      end
-    end
-    win_percent = "%.2f" % (wins.to_f / (wins + losses).to_f * 100.0)
-    total_games = wins + losses
-    x = { :player => player, :wins => wins, :losses => losses, 
-          :win_percentage => win_percent, :total_games => total_games }
-    name_and_stats.push(x) unless total_games < 5
   end
   name_and_stats.sort_by! { |a| a[:win_percentage].to_f}
   name_and_stats.reverse
@@ -314,33 +175,6 @@ def team_stats
     x = { :team => team, :wins => wins, :losses => losses, 
           :win_percentage => win_percent, :total_games => total_games }
     stats.push(x)
-  end
-  stats.sort! { |a,b| a[:team] <=> b[:team] }
-end
-
-def no_kyle_team_stats
-  stats = []
-  all_teams = teams
-  all_teams.each do |team|
-    wins, losses = 0, 0
-    @games.each do |game|
-      if game.winner1 == "Kyle Thomson" ||
-          game.winner2 == "Kyle Thomson" ||
-          game.loser1 == "Kyle Thomson" ||
-          game.loser2 == "Kyle Thomson"
-        next
-      end
-      if team == game.winner1 + " and " + game.winner2
-        wins += 1 
-      elsif team == game.loser1 + " and " + game.loser2
-        losses += 1 
-      end
-    end
-    win_percent = "%.2f" % (wins.to_f / (wins + losses).to_f * 100.0)
-    total_games = wins + losses
-    x = { :team => team, :wins => wins, :losses => losses, 
-          :win_percentage => win_percent, :total_games => total_games }
-    stats.push(x) unless total_games == 0
   end
   stats.sort! { |a,b| a[:team] <=> b[:team] }
 end
@@ -428,40 +262,4 @@ def opponent_stats
   end
   stats.sort_by! { |a| a[:win_percentage].to_f}
   stats.reverse
-end
-
-def no_kyle_opponent_stats
-  stats = [] 
-  player_games = all_player_games
-  all_players.each do |opponent|
-    wins, losses = 0, 0
-    player_games.each do |game|
-      if game.winner1 == "Kyle Thomson" ||
-          game.winner2 == "Kyle Thomson" ||
-          game.loser1 == "Kyle Thomson" ||
-          game.loser2 == "Kyle Thomson"
-        next
-      end
-      if game.winner1 == @player ||
-          game.winner2 == @player
-        if game.loser1 == opponent ||
-            game.loser2 == opponent
-          wins += 1
-        end 
-      end
-      if game.loser1 == @player ||
-          game.loser2 == @player
-        if game.winner1 == opponent ||
-            game.winner2 == opponent
-          losses += 1
-        end 
-      end
-    end
-    win_percent = "%.2f" % (wins.to_f / (wins + losses).to_f * 100.0)
-    total_games = wins + losses
-    x = { :opponent => opponent, :wins => wins, :losses => losses, 
-          :win_percentage => win_percent, :total_games => total_games }
-    stats.push(x) unless total_games == 0
-  end
-  stats.sort! { |a,b| b[:total_games] <=> a[:total_games] }
 end
