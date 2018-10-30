@@ -2,19 +2,16 @@
 <h1><a href="/add_player">Add Player</a></h1>
 <h1><a href="/all_players">All Players</a></h1>
 <h1><a href="/add_game">Add Game</a></h1>
+<h1><a href="/add_vollis_game">Add Vollis Game</a></h1>
 
 <section id="add">
 
   <div class="myInputs">
 
-  <form class="form-signin" name="my_form" action="/add_game" method="post">
-    <input id="auto-winner1" class="form-control" name="winner1" placeholder="Winner first player&hellip;"></input>
+  <form class="form-signin" name="my_form" action="/add_vollis_game" method="post">
+    <input id="auto-winner" class="form-control" name="winner" placeholder="Winner&hellip;"></input>
     <br><br>
-    <input id="auto-winner2" class="form-control" name="winner2" placeholder="Winner second player&hellip;"></input>
-    <br><br>
-    <input id="auto-loser1" class="form-control" name="loser1" placeholder="Loser first player&hellip;"></input>
-    <br><br>
-    <input id="auto-loser2" class="form-control" name="loser2" placeholder="Loser second player&hellip;"></input>
+    <input id="auto-loser" class="form-control" name="loser" placeholder="Loser&hellip;"></input>
     <br><br>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Add Game</button>
   </form>
@@ -28,16 +25,10 @@
 </script> 
 
 <script> 
-  $('#auto-winner1').on('focus', function() {
+  $('#auto-winner').on('focus', function() {
    document.body.scrollTop += this.getBoundingClientRect().top - 1;
   });
-  $('#auto-winner2').on('focus', function() {
-   document.body.scrollTop += this.getBoundingClientRect().top - 1;
-  });
-  $('#auto-loser1').on('focus', function() {
-   document.body.scrollTop += this.getBoundingClientRect().top - 1;
-  });
-  $('#auto-loser2').on('focus', function() {
+  $('#auto-loser').on('focus', function() {
    document.body.scrollTop += this.getBoundingClientRect().top - 1;
   });
 </script>
@@ -55,7 +46,7 @@
     </tr>
   </thead>
   <tbody>
-      <% @todays_stats.each do |stat| %>
+      <% @todays_vollis_stats.each do |stat| %>
     <tr>
         <td><%= stat[:player] %></td>
         <td class="numbered_stats"><%= stat[:wins] %></td>

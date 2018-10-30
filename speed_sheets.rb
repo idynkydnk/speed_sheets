@@ -61,7 +61,7 @@ get '/vollis' do
   @min_games = 20
   @max_games = 99999
   @min_years_stats = years_stats
-  erb :stats
+  erb :vollis_stats
 end
 
 get '/add_vollis_game' do
@@ -73,7 +73,7 @@ get '/add_vollis_game' do
   end
   @players = players
   @todays_vollis_stats = todays_vollis_stats
-  erb :add_game
+  erb :add_vollis_game
 end
 
 post '/add_vollis_game' do
@@ -82,7 +82,7 @@ post '/add_vollis_game' do
   n.loser = params[:loser]
   n.date = my_time_now 
   n.updated_at = Time.now
-  if n.location != "" && n.winner != "" && n.loser != "" 
+  if n.winner != "" && n.loser != "" 
     n.save
   end
   redirect '/add_vollis_game'

@@ -322,3 +322,33 @@ var autoloser2 = new autoComplete({
     suggest(suggestions);
   }
 });
+
+var autoloser = new autoComplete({
+  selector: '#auto-loser',
+  minChars: 0,
+  source: function(term, suggest){
+    term = term.toLowerCase();
+    var choices = all_choices 
+;
+    var suggestions = [];
+    for (i=0;i<choices.length;i++)
+      if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
+    suggest(suggestions);
+  }
+});
+
+var autowinner = new autoComplete({
+  selector: '#auto-winner',
+  minChars: 0,
+  source: function(term, suggest){
+    term = term.toLowerCase();
+    var choices = all_choices
+;
+    var suggestions = [];
+    for (i=0;i<choices.length;i++)
+      if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
+    suggest(suggestions);
+  }
+});
+
+
