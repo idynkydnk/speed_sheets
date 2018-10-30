@@ -2,6 +2,9 @@ require 'rubygems'
 require 'sinatra'
 require 'data_mapper'
 require 'google_drive'
+require_relative 'game'
+require_relative 'player'
+require_relative 'vollisgame'
 
 configure :development do
   DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/recall.db") 
@@ -10,83 +13,8 @@ end
 configure :production do
   DataMapper.setup(:default, ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
 end
-
-class Game
-  include DataMapper::Resource
-  property :id, Serial
-  property :location, Text, :required => true
-  property :winner1, Text, :required => true
-  property :winner2, Text, :required => true
-  property :loser1, Text, :required => true
-  property :loser2, Text, :required => true
-  property :date, Text
-  property :updated_at, DateTime
-end
-
-class Player
-  include DataMapper::Resource
-  property :id, Serial
-  property :player, Text, :required => true
-end
-
-class Vollisgame
-  include DataMapper::Resource
-  property :id, Serial
-  property :winner, Text, :required => true
-  property :loser, Text, :required => true
-  property :date, Text
-  property :updated_at, DateTime
-end
  
 DataMapper.finalize.auto_upgrade!
-
-get '/' do
-  @games = Game.all :order => :id.desc
-  @todays_stats = todays_stats
-  @min_games = 1
-  @max_games = 14
-  @years_stats = years_stats
-  @min_games = 20
-  @max_games = 99999
-  @min_years_stats = years_stats
-  erb :stats
-end
-
-get '/vollis' do
-  @vollisgames = Vollisgame.all :order => :id.desc
-  @todays_stats = todays_stats
-  @min_games = 1
-  @max_games = 14
-  @years_stats = years_stats
-  @min_games = 20
-  @max_games = 99999
-  @min_years_stats = years_stats
-  erb :vollis_stats
-end
-
-get '/add_vollis_game' do
-  @vollisgames = Vollisgame.all :order => :id.desc
-  @players = Player.all
-  players = []
-  @players.each do |player|
-    players << player.player
-  end
-  @players = players
-  @todays_vollis_stats = todays_vollis_stats
-  erb :add_vollis_game
-end
-
-post '/add_vollis_game' do
-  n = Vollisgame.new
-  n.winner = params[:winner]
-  n.loser = params[:loser]
-  n.date = my_time_now 
-  n.updated_at = Time.now
-  if n.winner != "" && n.loser != "" 
-    n.save
-  end
-  redirect '/add_vollis_game'
-end
 
 
 get '/reload_database' do
@@ -121,79 +49,7 @@ def reload_database
   end 
 end
 
-get '/all_players' do
-  @players = Player.all
-  erb :all_players
-end
 
-get '/players/:player' do |player|
-  @games = Game.all
-  @min_games = 5
-  @team_stats = team_stats
-  @player = player
-  @player_stats = player_stats
-  @opponent_stats = opponent_stats
-  erb :player_stats
-end
-
-get '/players/no_kyle/:player' do |player|
-  @games = Game.all
-  @team_stats = no_kyle_team_stats
-  @player = player
-  @player_stats = player_stats
-  @opponent_stats = no_kyle_opponent_stats
-  erb :player_stats
-end
-
-get '/no_kyle' do
-  @games = Game.all :order => :id.desc
-  @no_kyle_stats = no_kyle_stats
-  erb :no_kyle
-end
-
-get '/top_teams' do
-  @min_games = 5
-  @games = Game.all
-  @all_stats = team_stats
-  @top_teams = top_teams
-  erb :top_teams
-end
-
-get '/team_stats' do
-  @games = Game.all :order => :id.desc
-  @min_games = 5
-  @team_stats = team_stats
-  erb :team_stats
-end
-
-get '/add_game' do
-  @games = Game.all :order => :id.desc
-  @players = Player.all
-  players = []
-  @players.each do |player|
-    players << player.player
-  end
-  @players = players
-  @todays_stats = todays_stats
-  erb :add_game
-end
-
-post '/add_game' do
-  n = Game.new
-  n.location = "TK"
-  n.winner1 = params[:winner1]
-  n.winner2 = params[:winner2]
-  n.loser1 = params[:loser1]
-  n.loser2 = params[:loser2]
-  n.date = my_time_now 
-  n.updated_at = Time.now
-  n.winner1, n.winner2 = n.winner2, n.winner1 if n.winner2 < n.winner1 
-  n.loser1, n.loser2 = n.loser2, n.loser1 if n.loser2 < n.loser1 
-  if n.location != "" && n.winner1 != "" && n.winner2 != "" && n.loser1 != "" && n.loser2 != "" 
-    n.save
-  end
-  redirect '/add_game'
-end
 
 get '/add_player' do
   @players = Player.all

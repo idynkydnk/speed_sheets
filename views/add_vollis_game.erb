@@ -9,9 +9,9 @@
   <div class="myInputs">
 
   <form class="form-signin" name="my_form" action="/add_vollis_game" method="post">
-    <input id="auto-winner" class="form-control" name="winner" placeholder="Winner&hellip;"></input>
+    <input id="auto-winner1" class="form-control" name="winner1" placeholder="Winner&hellip;"></input>
     <br><br>
-    <input id="auto-loser" class="form-control" name="loser" placeholder="Loser&hellip;"></input>
+    <input id="auto-loser1" class="form-control" name="loser1" placeholder="Loser&hellip;"></input>
     <br><br>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Add Game</button>
   </form>
@@ -25,10 +25,10 @@
 </script> 
 
 <script> 
-  $('#auto-winner').on('focus', function() {
+  $('#auto-winner1').on('focus', function() {
    document.body.scrollTop += this.getBoundingClientRect().top - 1;
   });
-  $('#auto-loser').on('focus', function() {
+  $('#auto-loser1').on('focus', function() {
    document.body.scrollTop += this.getBoundingClientRect().top - 1;
   });
 </script>
