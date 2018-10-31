@@ -37,7 +37,7 @@ get '/players/:player' do |player|
 end
 
 get '/top_teams' do
-  @min_games = 5
+  @min_games = 10
   @games = Game.all
   @all_stats = team_stats
   @top_teams = top_teams
