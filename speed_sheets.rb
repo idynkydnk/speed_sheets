@@ -119,6 +119,28 @@ def all_players
   return players
 end
 
+def games_in_year(year)
+  games = []
+  @games.each do |game|
+    if game.date[6..9].to_i == Time.now.year
+      games << game 
+    end
+  end
+  return games
+end
+
+def all_years
+  years = []
+  @games.each do |game|
+    if years.include?(game.date[6..9])
+    else
+      years << game.date[6..9]
+    end
+  end
+  return years
+end
+
+
 def years_stats
   name_and_stats = []
   players = all_players

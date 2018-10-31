@@ -46,7 +46,7 @@ end
 
 get '/team_stats' do
   @games = Game.all :order => :id.desc
-  @min_games = 5
+  @min_games = 10
   @team_stats = team_stats
   erb :team_stats
 end
