@@ -26,6 +26,19 @@ get '/' do
   erb :stats
 end
 
+get '/past_years' do
+  @games = Game.all :order => :id.desc
+  @years = all_years
+  @past_years_stats = {}
+  @min_games = 20
+  @max_games = 2000
+  @years.each do |year|
+    games = games_in_year(year)
+    @past_years_stats[year] = past_years_stats(games)
+  end
+  erb :past_years
+end
+
 get '/players/:player' do |player|
   @games = Game.all
   @min_games = 5

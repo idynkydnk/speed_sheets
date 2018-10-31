@@ -122,7 +122,7 @@ end
 def games_in_year(year)
   games = []
   @games.each do |game|
-    if game.date[6..9].to_i == Time.now.year
+    if game.date[6..9].to_s == year.to_s
       games << game 
     end
   end
@@ -140,13 +140,34 @@ def all_years
   return years
 end
 
-
 def years_stats
   name_and_stats = []
   players = all_players
   players.each do |player|
     wins, losses = 0, 0
     @games.each do |game|
+      if player == game.winner1 || player == game.winner2
+        wins += 1
+      elsif player == game.loser1 || player == game.loser2
+        losses += 1
+      end
+    end
+    win_percent = "%.2f" % (wins.to_f / (wins + losses).to_f * 100.0)
+    total_games = wins + losses
+    x = { :player => player, :wins => wins, :losses => losses, 
+          :win_percentage => win_percent, :total_games => total_games }
+    name_and_stats << x unless x[:total_games] < @min_games || x[:total_games] >= @max_games
+  end
+  name_and_stats.sort_by! { |a| a[:win_percentage].to_f}
+  name_and_stats.reverse
+end
+
+def past_years_stats games
+  name_and_stats = []
+  players = all_players
+  players.each do |player|
+    wins, losses = 0, 0
+    games.each do |game|
       if player == game.winner1 || player == game.winner2
         wins += 1
       elsif player == game.loser1 || player == game.loser2
