@@ -28,7 +28,7 @@ end
 
 get '/past_years' do
   @games = Game.all :order => :id.desc
-  @years = all_years
+  @years = all_years.drop(1)
   @past_years_stats = {}
   @min_games = 20
   @max_games = 2000
