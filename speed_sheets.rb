@@ -5,6 +5,7 @@ require 'google_drive'
 require_relative 'game'
 require_relative 'player'
 require_relative 'vollisgame'
+require_relative 'sheets'
 
 configure :development do
   DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/recall.db") 
@@ -16,37 +17,14 @@ end
  
 DataMapper.finalize.auto_upgrade!
 
-
-get '/reload_database' do
-  "disabled"
-  #delete_database
-  #reload_database
-  #{}"reloaded"
-end
-
-get '/delete_database' do
-  "disabled"
-  #delete_database
-  #"deleted"
-end
-
-def reload_database
-  session = GoogleDrive::Session.from_config("config.json")
-  sheet = session.spreadsheet_by_key("1lI5GMwYa1ruXugvAERMJVJO4pX5RY69DCJxR4b0zDuI").worksheets[0]
-  (1..sheet.num_rows).each do |row|
-
-    x = Game.new
-    #date = sheet[row, 1]
-    #new_date = Time.new(date[6..9], date[0..1], date[3..4])
-    #x.date = new_date
-    x.date = sheet[row, 1]
-    x.location = sheet[row, 2] 
-    x.winner1 = sheet[row, 3]
-    x.winner2 = sheet[row, 4]
-    x.loser1 = sheet[row, 5]
-    x.loser2 = sheet[row, 6]
-    x.save
-  end 
+#load_sheets("1lI5GMwYa1ruXugvAERMJVJO4pX5RY69DCJxR4b0zDuI")
+def load_all_sheets
+  sheet_id_2011 = "1QP5ot-2S-eakqIyFPJ5mDI4QB0CLuy-HV_ttYCSI0Xg"
+  sheet_id_2016 = "1gvdN0KvpSOz7hV_OKoJKBerwynMKboBnQvHRsbcc4sQ"
+  sheet_id_2017 = "1lI5GMwYa1ruXugvAERMJVJO4pX5RY69DCJxR4b0zDuI"
+  load_sheets(sheet_id_2011)
+  load_sheets(sheet_id_2016)
+  load_sheets(sheet_id_2017)
 end
 
 def my_time_now
