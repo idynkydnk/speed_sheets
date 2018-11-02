@@ -20,7 +20,7 @@ get '/' do
   @games = this_year_games
   @todays_stats = todays_stats
   @min_games = 1
-  @max_games = 14
+  @max_games = 20
   @years_stats = years_stats
   @min_games = 20
   @max_games = 99999
