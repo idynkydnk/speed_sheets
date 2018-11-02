@@ -28,23 +28,9 @@ get '/' do
   erb :stats
 end
 
-get '/load_database' do
-  @games = Game.all :order => :id.desc
-  @todays_stats = todays_stats
-  @min_games = 1
-  @max_games = 14
-  @years_stats = years_stats
-  @min_games = 20
-  @max_games = 99999
-  @min_years_stats = years_stats
-  load_google_sheets
-  erb :stats
-end
-
 get '/past_years' do
-  delete_database
+  #delete_database
   load_all_sheets
-
   @games = Game.all :order => :id.desc
   @years = all_years - [Time.now.year.to_s]
   @past_years_stats = {}
@@ -58,7 +44,9 @@ get '/past_years' do
 end
 
 get '/players/:player' do |player|
-  @games = Game.all
+  @games = Game.all :order => :id.desc
+  this_year_games = games_in_year(Time.now.year.to_s)
+  @games = this_year_games
   @min_games = 5
   @team_stats = team_stats
   @player = player
@@ -69,7 +57,9 @@ end
 
 get '/top_teams' do
   @min_games = 10
-  @games = Game.all
+  @games = Game.all :order => :id.desc
+  this_year_games = games_in_year(Time.now.year.to_s)
+  @games = this_year_games
   @all_stats = team_stats
   @top_teams = top_teams
   erb :top_teams
