@@ -30,7 +30,7 @@ end
 
 get '/past_years' do
   #delete_database
-  load_all_sheets
+  #load_all_sheets
   @games = Game.all :order => :id.desc
   @years = all_years - [Time.now.year.to_s]
   @past_years_stats = {}
