@@ -10,6 +10,7 @@ class Game
   property :winner2, Text, :required => true
   property :loser1, Text, :required => true
   property :loser2, Text, :required => true
+  property :score, Integer, :required => true
   property :date, Text
   property :updated_at, DateTime
 end
