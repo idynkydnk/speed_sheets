@@ -17,6 +17,8 @@
     <br><br>
     <input id="auto-loser2" class="form-control" name="loser2" placeholder="Loser second player&hellip;"></input>
     <br><br>
+    <input id="auto-score" class="form-control" name="score" placeholder="Score&hellip;"></input>
+    <br><br>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Add Game</button>
   </form>
 
@@ -41,6 +43,9 @@
   $('#auto-loser2').on('focus', function() {
    document.body.scrollTop += this.getBoundingClientRect().top - 1;
   });
+  $('#auto-score').on('focus', function() {
+   document.body.scrollTop += this.getBoundingClientRect().top - 1;
+  });
 </script>
 
 
@@ -53,6 +58,7 @@
       <th class="numbered_stats" scope="col" colspan="1">Wins</th>
       <th class="numbered_stats" scope="col" colspan="1">Losses</th>
       <th class="numbered_stats" scope="col" colspan="1">Win %</th>
+      <th class="numbered_stats" scope="col" colspan="1">Points</th>
     </tr>
   </thead>
   <tbody>
@@ -62,6 +68,7 @@
         <td class="numbered_stats"><%= stat[:wins] %></td>
         <td class="numbered_stats"><%= stat[:losses] %></td>
         <td class="numbered_stats"><%= stat[:win_percentage] %>%</td>
+        <td class="numbered_stats"><%= stat[:score] %></td>
     </tr>
       <% end %>
   </tbody>

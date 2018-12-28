@@ -48,21 +48,35 @@ def todays_stats
   games = todays_games
   players = todays_players(games)
   players.each do |player|
-    wins, losses = 0, 0
+    wins, losses, score = 0, 0, 0
     games.each do |game|
       if player == game.winner1 || player == game.winner2
         wins += 1
+        if game.score
+          score += calculate_differential(game.score)
+        end
       elsif player == game.loser1 || player == game.loser2
         losses += 1
+        if game.score
+          score -= calculate_differential(game.score)
+        end
       end
     end
     win_percent = "%.2f" % (wins.to_f / (wins + losses).to_f * 100.0)
     x = { :player => player, :wins => wins, :losses => losses, 
-          :win_percentage => win_percent }
+          :win_percentage => win_percent, :score => score }
     name_and_stats.push(x)
   end
   name_and_stats.sort_by! { |a| a[:win_percentage].to_f}
   name_and_stats.reverse
+end
+
+def calculate_differential score
+  if score.to_i > 18
+    return 2
+  else
+    return 21 - score.to_i
+  end
 end
 
 def todays_games

@@ -222,47 +222,8 @@ function autoComplete(options){
     })();
 
 
-/*
-
-autoComplete({
-  selector: '#auto-location',
-  minChars: 0,
-  source: function(term, response){
-    $.getJSON('locations', { q: term }, function(data){ response(data); });
-  }
-})
-
-autoComplete({
-  selector: '#auto-winner1',
-  minChars: 0,
-  source: function(term, response){
-    $.getJSON('winners', { q: term }, function(data){ response(data); });
-  }
-})
-
-
-
-*/
-
-
-
-
-
-var autolocation = new autoComplete({
-  selector: '#auto-location',
-  minChars: 0,
-  source: function(term, suggest){
-    term = term.toLowerCase();
-    var choices = ['TK','Clearwater Beach'];
-    var suggestions = [];
-    for (i=0;i<choices.length;i++)
-      if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
-    suggest(suggestions);
-  }
-});
-
-
 // var all_choices = ["Kyle Thomson","Chris Goshow","Chris Dedo","Evan Murray","Ryan Aikens","Chris Jones","Brady Donahue","Mike Ciav","Alex Amylon","Ike Isenhour","Ryan Donahue","Brandon Lozano","Jeff Zhao","Josh Roth","Marin Xaimov","Gio Rodriguez","Tyler ???","Louis ???","Vinny ???","Cole Constantino","Hawk Hatcher","Tyler Bird","Brian Bowie","Aaron Plumb","Denis Buznea","Kevin Legg","Kurt Frahn","Ryan Schmidt","Nic Stojak","Mike Kuk","Ian Marvel","Matt Sokolowski","Dustin Rambo","Troy Nowak"]
+
 
 
 var autowinner1 = new autoComplete({
@@ -280,9 +241,22 @@ var autowinner1 = new autoComplete({
 });
 
 
-
 var autowinner2 = new autoComplete({
   selector: '#auto-winner2',
+  minChars: 0,
+  source: function(term, suggest){
+    term = term.toLowerCase();
+    var choices = all_choices
+;
+    var suggestions = [];
+    for (i=0;i<choices.length;i++)
+      if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
+    suggest(suggestions);
+  }
+});
+
+var autoscore = new autoComplete({
+  selector: '#auto-score',
   minChars: 0,
   source: function(term, suggest){
     term = term.toLowerCase();
@@ -315,34 +289,6 @@ var autoloser2 = new autoComplete({
   source: function(term, suggest){
     term = term.toLowerCase();
     var choices = all_choices 
-;
-    var suggestions = [];
-    for (i=0;i<choices.length;i++)
-      if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
-    suggest(suggestions);
-  }
-});
-
-var autoloser = new autoComplete({
-  selector: '#auto-loser',
-  minChars: 0,
-  source: function(term, suggest){
-    term = term.toLowerCase();
-    var choices = all_choices 
-;
-    var suggestions = [];
-    for (i=0;i<choices.length;i++)
-      if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
-    suggest(suggestions);
-  }
-});
-
-var autowinner = new autoComplete({
-  selector: '#auto-winner',
-  minChars: 0,
-  source: function(term, suggest){
-    term = term.toLowerCase();
-    var choices = all_choices
 ;
     var suggestions = [];
     for (i=0;i<choices.length;i++)

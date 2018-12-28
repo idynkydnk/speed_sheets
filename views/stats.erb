@@ -7,6 +7,7 @@
       <th class="numbered_stats" scope="col" colspan="1">Wins</th>
       <th class="numbered_stats" scope="col" colspan="1">Losses</th>
       <th class="numbered_stats" scope="col" colspan="1">Win %</th>
+      <th class="numbered_stats" scope="col" colspan="1">Points</th>
     </tr>
   </thead>
   <tbody>
@@ -16,13 +17,13 @@
         <td class="numbered_stats"><%= stat[:wins] %></td>
         <td class="numbered_stats"><%= stat[:losses] %></td>
         <td class="numbered_stats"><%= stat[:win_percentage] %>%</td>
+        <td class="numbered_stats"><%= stat[:score] %></td>
     </tr>
       <% end %>
   </tbody>
 </table>
 <br></br>
 <% end %>
-
 
 
 <table>
@@ -53,7 +54,7 @@
   </tbody>
 </table>
 
-<br></br><br></br><br></br>
+<br></br>
 
 <table>
   <caption>Less than <%= @min_games.to_s %> games</caption>
