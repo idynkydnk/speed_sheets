@@ -75,6 +75,12 @@ end
 
 get '/add_game' do
   @games = Game.all :order => :id.desc
+  this_year_games = games_in_year(Time.now.year.to_s)
+  @games = this_year_games
+  @todays_games = todays_games
+  @min_games = 20
+  @max_games = 2000
+  @years_stats = years_stats
   @players = Player.all
   players = []
   @players.each do |player|
@@ -132,11 +138,12 @@ put '/:id' do
   n.winner2 = params[:winner2]
   n.loser1 = params[:loser1]
   n.loser2 = params[:loser2]
+  n.score = params[:score]
   #n.updated_at = Time.now
-  if n.location != "" && n.winner1 != "" && n.winner2 != "" && n.loser1 != "" && n.loser2 != "" 
+  if n.location != "" && n.winner1 != "" && n.winner2 != "" && n.loser1 != "" && n.loser2 != "" && n.score != ""
     n.save
   end
-  redirect '/'
+  redirect '/add_game'
 end
 
 get '/:id/delete' do

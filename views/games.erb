@@ -4,7 +4,8 @@
     <tr>
       <th class="date" scope="col" colspan="1">Date</th>
       <th scope="col" colspan="1">Winner</th>
-       <th scope="col" colspan="1">Loser</th>
+      <th scope="col" colspan="1">Loser</th>
+      <th scope="col" colspan="1">Score</th>
     </tr>
   </thead>
   <tbody>
@@ -13,6 +14,7 @@
         <td class="date"><%= game.date %></td>
         <td><a href="/players/<%= game.winner1 %>" ><%= game.winner1 %> /<br><a href="/players/<%= game.winner2 %>" ><%= game.winner2 %> </td>
         <td><a href="/players/<%= game.loser1 %>" ><%= game.loser1 %> /<br><a href="/players/<%= game.loser2 %>" ><%= game.loser2 %> </td>
+        <td><%= game.score %></td>
     </tr>
       <% end %>
   </tbody>

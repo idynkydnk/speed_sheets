@@ -255,20 +255,6 @@ var autowinner2 = new autoComplete({
   }
 });
 
-var autoscore = new autoComplete({
-  selector: '#auto-score',
-  minChars: 0,
-  source: function(term, suggest){
-    term = term.toLowerCase();
-    var choices = all_choices
-;
-    var suggestions = [];
-    for (i=0;i<choices.length;i++)
-      if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
-    suggest(suggestions);
-  }
-});
-
 var autoloser1 = new autoComplete({
   selector: '#auto-loser1',
   minChars: 0,
@@ -297,4 +283,17 @@ var autoloser2 = new autoComplete({
   }
 });
 
+var autoscore = new autoComplete({
+  selector: '#auto-score',
+  minChars: 0,
+  source: function(term, suggest){
+    term = term.toLowerCase();
+    var choices = all_scores 
+;
+    var suggestions = [];
+    for (i=0;i<choices.length;i++)
+      if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
+    suggest(suggestions);
+  }
+});
 

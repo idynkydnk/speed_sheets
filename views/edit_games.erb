@@ -1,15 +1,31 @@
+<table class="games">
+  <caption>2017 Games</caption>
+  <thead>
+    <tr>
+      <th class="date" scope="col" colspan="1">Date</th>
+      <th scope="col" colspan="1">Winner</th>
+      <th scope="col" colspan="1">Loser</th>
+      <th scope="col" colspan="1">Score</th>
+      <th scope="col" colspan="1">Edit</th>
+    </tr>
+  </thead>
+  <tbody>
+      <% @games.each do |game| %>
+    <tr>
+        <td class="date"><%= game.date %></td>
+        <td><a href="/players/<%= game.winner1 %>" ><%= game.winner1 %> /<br><a href="/players/<%= game.winner2 %>" ><%= game.winner2 %> </td>
+        <td><a href="/players/<%= game.loser1 %>" ><%= game.loser1 %> /<br><a href="/players/<%= game.loser2 %>" ><%= game.loser2 %> </td>
+        <td><%= game.score %></td>
+        <td><span><a href="/<%= game.id %>">[edit]</a></span></td>
+    </tr>
+      <% end %>
+  </tbody>
+</table>
+
+<br><br>
+
 <h1><a href="/edit_games">Edit Games</a></h1>
 <h1><a href="/add_player">Add Player</a></h1>
 <h1><a href="/all_players">All Players</a></h1>
 <h1><a href="/add_game">Add Game</a></h1>
 <h1><a href="/add_vollis_game">Add Vollis Game</a></h1>
-
-<% @games.each do |game| %>
-  <article>
-    <p>
-      <%= game.date %> - <%= game.winner1 %> and <%= game.winner2 %> beat <%= game.loser1 %> and 
-      <%= game.loser2 %>
-      <span><a href="/<%= game.id %>">[edit]</a></span>
-    </p>
-  </article>
-<% end %>
