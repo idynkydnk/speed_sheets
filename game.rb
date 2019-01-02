@@ -92,9 +92,12 @@ get '/add_game' do
   this_year_games = games_in_year(Time.now.year.to_s)
   @games = this_year_games
   @todays_games = todays_games
-  @min_games = 20
-  @max_games = 2000
+  @min_games = 1
+  @max_games = 20
   @years_stats = years_stats
+  @min_games = 20
+  @max_games = 99999
+  @min_years_stats = years_stats
   @players = Player.all
   players = []
   @players.each do |player|

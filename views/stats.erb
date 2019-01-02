@@ -29,7 +29,7 @@
 <br></br>
 <% end %>
 
-
+<% if @min_years_stats[0] %>
 <table>
   <caption><%= @year %> Stats</caption>
   <thead>
@@ -57,11 +57,13 @@
 
   </tbody>
 </table>
+<% end %>
 
 <br></br>
 
 <table>
   <caption>Less than <%= @min_games.to_s %> games</caption>
+
   <thead>
     <tr>
       <th class="rank" scope="col" colspan="1"># </th>
