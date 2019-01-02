@@ -17,7 +17,8 @@ end
 
 get '/' do
   @games = Game.all :order => :id.desc
-  this_year_games = games_in_year(Time.now.year.to_s)
+  @year = Time.now.year.to_s
+  this_year_games = games_in_year(@year)
   @games = this_year_games
   @todays_stats = todays_stats
   @min_games = 1
@@ -42,6 +43,19 @@ get '/past_years' do
     @past_years_stats[year] = past_years_stats(games)
   end
   erb :past_years
+end
+
+get '/players/:player/:year' do
+  @player = params[:player]
+  @year = params[:year]
+  @games = Game.all :order => :id.desc
+  this_year_games = games_in_year(@year)
+  @games = this_year_games
+  @min_games = 5
+  @team_stats = team_stats
+  @player_stats = player_stats
+  @opponent_stats = opponent_stats
+  erb :player_stats
 end
 
 get '/players/:player' do |player|

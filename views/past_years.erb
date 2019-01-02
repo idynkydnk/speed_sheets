@@ -16,7 +16,7 @@
       <% @past_years_stats[year].each_with_index do |stat, rank| %>
         <tr>
           <td class="rank"><%= (rank + 1).to_s %></td>
-          <td class="player_link"><a href="/players/<%= stat[:player] %>" > <%= stat[:player] %></td>
+          <td class="player_link"><a href="/players/<%= stat[:player] %>/<%= year %>" > <%= stat[:player] %></td>
           <td class="numbered_stats"><%= stat[:wins] %></td>
           <td class="numbered_stats"><%= stat[:losses] %></td>
           <td class="numbered_stats"><%= stat[:win_percentage] %>%</td>
