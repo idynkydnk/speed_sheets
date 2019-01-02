@@ -64,7 +64,11 @@
         <td class="numbered_stats"><%= stat[:wins] %></td>
         <td class="numbered_stats"><%= stat[:losses] %></td>
         <td class="numbered_stats"><%= stat[:win_percentage] %>%</td>
-        <td class="numbered_stats"><%= stat[:score] %></td>
+        <% if stat[:score] > 0 %>
+          <td class="numbered_stats">+<%= stat[:score] %></td>
+        <% else %>
+          <td class="numbered_stats"><%= stat[:score] %></td>
+        <% end %>
     </tr>
       <% end %>
   </tbody>
