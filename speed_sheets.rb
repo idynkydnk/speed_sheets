@@ -67,6 +67,7 @@ def todays_stats
           :win_percentage => win_percent, :score => score }
     name_and_stats.push(x)
   end
+  name_and_stats.sort_by! { |a| a[:score].to_i}
   name_and_stats.sort_by! { |a| a[:win_percentage].to_f}
   name_and_stats.reverse
 end
