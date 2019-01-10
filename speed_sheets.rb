@@ -73,8 +73,8 @@ def todays_stats
 end
 
 def calculate_differential score
-  if score[4]
-    return score[3..4].to_i - score[0..1].to_i
+  if score[2] == "-"
+    return score[0..1].to_i - score[3..4].to_i
   elsif score.to_i > 18
     return 2
   else
