@@ -73,11 +73,7 @@ def todays_stats
 end
 
 def calculate_differential score
-  if score.to_i > 18
-    return 2
-  else
-    return 21 - score.to_i
-  end
+  return score[3..4].to_i - score[0..1].to_i
 end
 
 def todays_games
