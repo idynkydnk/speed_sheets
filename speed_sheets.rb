@@ -5,6 +5,7 @@ require 'google_drive'
 require_relative 'game'
 require_relative 'player'
 require_relative 'vollisgame'
+require_relative 'golfgame'
 require_relative 'sheets'
 
 configure :development do

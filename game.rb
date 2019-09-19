@@ -1,6 +1,7 @@
 
 require_relative 'player'
 require_relative 'vollisgame'
+require_relative 'golfgame'
 
 class Game
   include DataMapper::Resource
