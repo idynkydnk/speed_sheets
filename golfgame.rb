@@ -1,7 +1,8 @@
 require_relative 'game'
 require_relative 'player'
+require_relative 'golf_functions'
 
-class Golfgame
+class Golf
   include DataMapper::Resource
   property :id, Serial
   property :golfer, Text
@@ -13,12 +14,12 @@ class Golfgame
 end
 
 get '/add_golf_game' do
-  @golfgames = Golfgame.all :order => :id.desc
+  @golfgames = Golf.all :order => :id.desc
   erb :add_golf_game
 end
 
 post '/add_golf_game' do
-  n = Golfgame.new
+  n = Golf.new
   n.golfer = params[:golfer]
   n.location = params[:location]  
   n.score = params[:score]
@@ -29,4 +30,13 @@ post '/add_golf_game' do
     n.save
   end
   redirect '/add_golf_game'
+end
+
+get '/golfers/:golfer' do |golfer|
+  @games = Golf.all :order => :id.desc
+  this_year_games = golf_games_in_year(Time.now.year.to_s)
+  @games = this_year_games
+  @golfer = golfer
+  @golfer_stats = golfer_stats
+  erb :golfer_stats
 end
