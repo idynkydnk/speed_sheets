@@ -17,7 +17,30 @@
   </div>
 
 <br></br>
+</section>
 
+<table class="games">
+  <caption>Games</caption>
+  <thead>
+    <tr>
+      <th class="date" scope="col" colspan="1">Date</th>
+      <th scope="col" colspan="1">Golfer</th>
+      <th scope="col" colspan="1">Par</th>
+      <th scope="col" colspan="1">Score</th>
+      <th scope="col" colspan="1">Edit</th>
+    </tr>
+  </thead>
+  <tbody>
+      <% @golfgames.each do |game| %>
+    <tr>
+        <td class="date"><%= game.date %></td>
+        <td><a><%= game.golfer %> </td>
+        <td><%= game.score %></td>
+        <td><span><a href="/<%= game.id %>">[edit]</a></span></td>
+    </tr>
+      <% end %>
+  </tbody>
+</table>
 
 <br><br>
 
