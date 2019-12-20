@@ -69,9 +69,3 @@ get '/golf/:id/delete' do
   @title = "Confirm deletion of game ##{params[:id]}"
   erb :golfdelete
 end
-
-delete '/:id' do
-  n = Golf.get params[:id]
-  n.destroy
-  redirect '/add_golf_game'
-end
