@@ -5,7 +5,6 @@ require 'google_drive'
 require_relative 'game'
 require_relative 'player'
 require_relative 'vollisgame'
-require_relative 'golfgame'
 require_relative 'sheets'
 
 configure :development do
@@ -28,8 +27,6 @@ def load_all_sheets
   load_sheets(sheet_id_2017)
   #load_sheets(sheet_id_2018)
 end
-
-
 
 def my_time_now
   month = Time.now.month.to_s
