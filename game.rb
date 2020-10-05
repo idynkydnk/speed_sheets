@@ -99,8 +99,10 @@ get '/add_game' do
   @min_games = 20
   @max_games = 99999
   @min_years_stats = years_stats
-  @players = Player.all
+  delete_all_players
+  import_all_players(300)
   players = []
+  @players = Player.all
   @players.each do |player|
     players << player.player
   end
@@ -116,6 +118,7 @@ post '/add_game' do
   n.winner2 = params[:winner2]
   n.loser1 = params[:loser1]
   n.loser2 = params[:loser2]
+  #add_players(n.winner1, n.winner2, n.loser1, n.loser2)
   n.score = params[:score]
   n.date = my_time_now 
   n.updated_at = Time.now
@@ -173,5 +176,5 @@ end
 delete '/:id' do
   n = Game.get params[:id]
   n.destroy
-  redirect '/games'
+  redirect '/edit_games'
 end
