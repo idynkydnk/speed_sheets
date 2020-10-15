@@ -5,15 +5,16 @@ class Player
   include DataMapper::Resource
   property :id, Serial
   property :player, Text, :required => true
+  property :updated_at, DateTime
 end
 
 get '/players' do
-  @players = Player.all
+  @players = Player.all :order => :updated_at.desc
   erb :players
 end
 
 get '/add_player' do
-  @players = Player.all
+  @players = Player.all :order => :updated_at.desc
   erb :add_player
 end
 
@@ -28,9 +29,7 @@ get '/import_all_players' do
 end
 
 post '/add_player' do
-  n = Player.new
-  n.player = params[:player]
-  n.save
+  add_player(params[:player])
   redirect '/add_player'
 end
 
@@ -55,8 +54,51 @@ def add_players_all_games
   end
 end
 
+def add_player new_player
+  if player_exists?(new_player)
+    @players = Player.all :order => :updated_at.desc
+    @players.each do |player|
+      if player.player == new_player
+        player.updated_at = Time.now
+        player.save
+        return
+      end
+    end
+    return
+  end
+  n = Player.new
+  n.player = new_player
+  n.updated_at = Time.now
+  n.save
+end
+
+def player_exists? new_player
+  @players = Player.all :order => :updated_at.desc
+  @players.each do |player|
+    if player.player == new_player
+      return true
+    end
+  end
+  return false
+end
+
+def move_to_top new_player
+  @players = Player.all :order => :updated_at.desc
+  n = 0
+  @players.each do |player|
+    player.id = player.id + n
+    if player.player == new_player
+      n = 1
+      player.id = 1242
+    end
+    puts player.player
+    puts player.id
+  end
+end
+
+
 def add_players name1, name2, name3, name4
-  @players = Player.all
+  @players = Player.all :order => :updated_at.desc
   all_players = []
   new_players = []
   @players.each do |player|
@@ -74,7 +116,7 @@ def add_players name1, name2, name3, name4
 end
 
 def delete_all_players
-  @players = Player.all
+  @players = Player.all :order => :updated_at.desc
   @players.each do |player|
     player.destroy
   end

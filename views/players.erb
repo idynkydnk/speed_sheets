@@ -4,6 +4,7 @@
 <% @players.each do |player| %>
   <article>
     <p>
+      <%= player.updated_at %>							
       <%= player.player %>
       <span><a href="/player/delete/<%= player.id %>">[delete]</a></span>
     </p>
