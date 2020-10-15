@@ -52,7 +52,7 @@ get '/players/:player/:year' do
   @games = Game.all :order => :id.desc
   this_year_games = games_in_year(@year)
   @games = this_year_games
-  @min_games = 5
+  @min_games = 1
   @team_stats = team_stats
   @player_stats = player_stats
   @opponent_stats = opponent_stats
