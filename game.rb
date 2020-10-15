@@ -37,7 +37,7 @@ get '/past_years' do
   @games = Game.all :order => :id.desc
   @years = all_years - [Time.now.year.to_s]
   @past_years_stats = {}
-  @min_games = 20
+  @min_games = 1
   @max_games = 2000
   @years.each do |year|
     games = games_in_year(year)
@@ -63,7 +63,7 @@ get '/players/:player' do |player|
   @games = Game.all :order => :id.desc
   this_year_games = games_in_year(Time.now.year.to_s)
   @games = this_year_games
-  @min_games = 5
+  @min_games = 1
   @team_stats = team_stats
   @player = player
   @player_stats = player_stats
