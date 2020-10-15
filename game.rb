@@ -160,7 +160,8 @@ put '/:id' do
   n.loser1 = params[:loser1]
   n.loser2 = params[:loser2]
   n.score = params[:score]
-  #n.updated_at = Time.now
+  n.winner1, n.winner2 = n.winner2, n.winner1 if n.winner2 < n.winner1 
+  n.loser1, n.loser2 = n.loser2, n.loser1 if n.loser2 < n.loser1 
   if n.location != "" && n.winner1 != "" && n.winner2 != "" && n.loser1 != "" && n.loser2 != "" && n.score != ""
     n.save
   end
