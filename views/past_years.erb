@@ -13,7 +13,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @past_years_stats[year].each_with_index do |stat, rank| %>
+      <% @min_past_years_stats[year].each_with_index do |stat, rank| %>
         <tr>
           <td class="rank"><%= (rank + 1).to_s %></td>
           <td class="player_link"><a href="/players/<%= stat[:player] %>/<%= year %>" > <%= stat[:player] %></td>

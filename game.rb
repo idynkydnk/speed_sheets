@@ -31,18 +31,46 @@ get '/' do
   erb :stats
 end
 
+get '/year' do
+  @games = Game.all :order => :id.desc
+  @years = all_years - [Time.now.year.to_s]
+  erb :year
+end
+
+get '/pastyear/:year' do |year|
+  @year = year
+  @games = Game.all :order => :id.desc
+  games = games_in_year(year)
+  @min_games = 1
+  @max_games = 20
+  @years_stats = past_years_stats(games)
+  @min_games = 20
+  @max_games = 99999
+  @min_years_stats = past_years_stats(games)
+  erb :pastyear
+end
+
 get '/past_years' do
   #delete_database
   #load_all_sheets
   @games = Game.all :order => :id.desc
   @years = all_years - [Time.now.year.to_s]
   @past_years_stats = {}
+  @min_past_years_stats = {}
   @min_games = 1
-  @max_games = 2000
+  @max_games = 20
   @years.each do |year|
     games = games_in_year(year)
     @past_years_stats[year] = past_years_stats(games)
   end
+
+  @min_games = 20
+  @max_games = 2000
+  @years.each do |year|
+    games = games_in_year(year)
+    @min_past_years_stats[year] = past_years_stats(games)
+  end
+
   erb :past_years
 end
 
