@@ -18,7 +18,6 @@ end
 
 get '/' do
   @games = Game.all :order => :id.desc
-  fix_games
   @year = Time.now.year.to_s
   this_year_games = games_in_year(@year)
   @games = this_year_games
