@@ -80,10 +80,16 @@ get '/players/:player/:year' do
   @games = Game.all :order => :id.desc
   this_year_games = games_in_year(@year)
   @games = this_year_games
-  @min_games = 1
   @team_stats = team_stats
+  @min_games = 1
+  @max_games = 10
   @player_stats = player_stats
   @opponent_stats = opponent_stats
+  @min_games = 10
+  @max_games = 10000
+  @min_player_stats = player_stats
+  @min_opponent_stats = opponent_stats
+
   erb :player_stats
 end
 

@@ -9,6 +9,63 @@
       <th class="numbered_stats" scope="col" colspan="1">Win %</th>
     </tr>
   </thead>
+
+  <tbody>
+      <% @min_player_stats.each_with_index do |stat, rank| %>
+    <tr>
+        <td class="rank"><%= (rank + 1).to_s %></td>
+        <td class="player_link"><a href="/players/<%= stat[:team] %>" > <%= stat[:team] %></td>
+        <td class="numbered_stats"><%= stat[:wins] %></td>
+        <td class="numbered_stats"><%= stat[:losses] %></td>
+        <td class="numbered_stats"><%= stat[:win_percentage] %>%</td>
+    </tr>
+      <% end %>
+  </tbody>
+</table>
+
+<br></br>
+
+<table id="myTable3">
+  <caption>Stats Against</caption>
+  <thead>
+    <tr>
+      <th class="rank" scope="col" colspan="1"># </th>
+      <th scope="col" colspan="1">Opponent</th>
+      <th class="numbered_stats" scope="col" colspan="1">Wins</th>
+      <th class="numbered_stats" scope="col" colspan="1">Losses</th>
+      <th class="numbered_stats" scope="col" colspan="1">Win %</th>
+    </tr>
+  </thead>
+  <tbody>
+      <% @min_opponent_stats.each_with_index do |stat, rank| %>
+    <tr>
+        <td class="rank"><%= (rank + 1).to_s %></td>
+        <td class="player_link"><a href="/players/<%= stat[:opponent] %>" > <%= stat[:opponent] %></td>
+        <td class="numbered_stats"><%= stat[:wins] %></td>
+        <td class="numbered_stats"><%= stat[:losses] %></td>
+        <td class="numbered_stats"><%= stat[:win_percentage] %>%</td>
+    </tr>
+      <% end %>
+  </tbody>
+</table>
+
+<br></br>
+<br></br>
+<br></br>
+<br></br>
+
+<table>
+  <caption>Less than <%= @min_games.to_s %> games</caption>
+  <thead>
+    <tr>
+      <th class="rank" scope="col" colspan="1"># </th>
+      <th scope="col" colspan="1">Partner</th>
+      <th class="numbered_stats" scope="col" colspan="1">Wins</th>
+      <th class="numbered_stats" scope="col" colspan="1">Losses</th>
+      <th class="numbered_stats" scope="col" colspan="1">Win %</th>
+    </tr>
+  </thead>
+
   <tbody>
       <% @player_stats.each_with_index do |stat, rank| %>
     <tr>
@@ -20,7 +77,10 @@
     </tr>
       <% end %>
   </tbody>
+
 </table>
+
+
 <br></br>
 <table id="myTable3">
   <caption>Stats Against</caption>
@@ -44,5 +104,5 @@
     </tr>
       <% end %>
   </tbody>
-</table>
 
+</table>

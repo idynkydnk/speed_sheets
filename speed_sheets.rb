@@ -242,7 +242,7 @@ def player_stats
   stats = []
   @team_stats.each do |stat|
     if stat[:team].include?(@player)
-      stats << stat unless stat[:total_games] < @min_games
+      stats << stat unless stat[:total_games] < @min_games || stat[:total_games] >= @max_games
     end
   end
   x = format_teamates(@player, stats)
@@ -297,7 +297,7 @@ def opponent_stats
     total_games = wins + losses
     x = { :opponent => opponent, :wins => wins, :losses => losses, 
           :win_percentage => win_percent, :total_games => total_games }
-    stats.push(x) unless total_games < @min_games
+    stats.push(x) unless total_games < @min_games || total_games >= @max_games
   end
   stats.sort_by! { |a| a[:win_percentage].to_f}
   stats.reverse
