@@ -302,3 +302,7 @@ def opponent_stats
   stats.sort_by! { |a| a[:win_percentage].to_f}
   stats.reverse
 end
+
+def remove_absent_years player
+
+end

@@ -3,8 +3,7 @@
 <h1><a href="/import_all_players">Import All Players</a></h1>
 <% @players.each do |player| %>
   <article>
-    <p>
-      <%= player.updated_at %>							
+    <p>						
       <%= player.player %>
       <span><a href="/player/delete/<%= player.id %>">[delete]</a></span>
     </p>

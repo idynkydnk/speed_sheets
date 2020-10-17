@@ -89,14 +89,11 @@ end
 
 get '/players/:player' do |player|
   @games = Game.all :order => :id.desc
-  this_year_games = games_in_year(Time.now.year.to_s)
-  @games = this_year_games
-  @min_games = 1
-  @team_stats = team_stats
+  @years = all_years
   @player = player
-  @player_stats = player_stats
-  @opponent_stats = opponent_stats
-  erb :player_stats
+  remove_absent_years(player)
+  puts "hello"
+  erb :player
 end
 
 get '/top_teams' do
