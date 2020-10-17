@@ -306,3 +306,20 @@ end
 def remove_absent_years player
 
 end
+
+def fix_games
+  @games.each do |game|
+    if game.winner1 > game.winner2
+      game.winner1,game.winner2 = game.winner2,game.winner1
+    end
+    if game.loser1 > game.loser2
+      game.loser1,game.loser2 = game.loser2,game.loser1
+    end
+    game.save
+  end
+end
+
+
+
+
+
