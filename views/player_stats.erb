@@ -1,5 +1,7 @@
+<table><caption><%= @player %>'s Stats <%= @year %></caption></table>
+<% if @min_player_stats.length > 0 %>
 <table>
-  <caption><%= @player %>'s Stats <%= @year %></caption>
+
   <thead>
     <tr>
       <th class="rank" scope="col" colspan="1"># </th>
@@ -22,9 +24,11 @@
       <% end %>
   </tbody>
 </table>
+<% end %>
 
 <br></br>
 
+<% if @min_opponent_stats.length > 0 %>
 <table id="myTable3">
   <caption>Stats Against</caption>
   <thead>
@@ -53,6 +57,8 @@
 <br></br>
 <br></br>
 <br></br>
+<% end %>
+
 
 <table>
   <caption>Less than <%= @min_games.to_s %> games</caption>
