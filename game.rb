@@ -109,16 +109,19 @@ end
 
 get '/players/:player' do |player|
   @games = Game.all :order => :id.desc
-  @years = all_years
-  @player_years = @years
+  @player_years = all_years
+  @years = []
   @player = player
-  @years.each do |year|
-    @games = games_in_year(year)
+  @player_years.each do |year|
+    @games = Game.all :order => :id.desc
+    this_year_games = games_in_year(year)
+    @games = this_year_games
     @team_stats = team_stats
     @min_games = 1
     @max_games = 10000
-    if player_stats.length < 1
-      @years = @years - [year]
+    @player_stats = player_stats
+    if @player_stats.length > 1
+      @years << year
     end
   end
   remove_absent_years(player)
